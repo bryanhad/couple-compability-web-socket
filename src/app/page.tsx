@@ -16,9 +16,9 @@ export default function Home() {
                 asChild
                 className="bg-red-500 px-8 py-6 text-xl text-white hover:bg-red-600"
             >
-                <Link href="/room/create">
+                <Link href="/room">
                     <Heart className="mr-2 h-6 w-6" />
-                    Start Your Love Game
+                    Try out the test
                 </Link>
             </Button>
         </div>
