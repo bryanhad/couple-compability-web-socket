@@ -55,7 +55,7 @@ function Modal({
             )}
             <DialogContent
                 disableDefaultCloseButton={disableDefaultCloseButton}
-                className={cn("w-full max-w-[95%] sm:max-w-md", className)}
+                className={cn("w-full max-w-[95%] sm:max-w-md rounded-md", className)}
             >
                 {(title || desc) && (
                     <DialogHeader className="flex flex-col gap-1 items-center">

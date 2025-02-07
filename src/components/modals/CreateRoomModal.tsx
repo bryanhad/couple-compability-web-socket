@@ -94,7 +94,7 @@ function CreateRoomModal() {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8"
+                        className="space-y-2"
                     >
                         <FormField
                             control={form.control}
@@ -112,9 +112,15 @@ function CreateRoomModal() {
                                 </FormItem>
                             )}
                         />
-                        <LoadingButton loading={isLoading} type="submit">
-                            Go To Room
-                        </LoadingButton>
+                        <div className="pt-4">
+                            <LoadingButton
+                                loading={isLoading}
+                                type="submit"
+                                className="w-full"
+                            >
+                                Go To Room
+                            </LoadingButton>
+                        </div>
                     </form>
                 </Form>
             </div>

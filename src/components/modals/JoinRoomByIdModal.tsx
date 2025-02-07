@@ -92,13 +92,13 @@ function JoinRoomByIdModal() {
                 </Button>
             }
             title={"Enter Test Room ID"}
-            desc={"Please enter the generated room ID from your partner."}
+            desc={"Please enter your desired display name and the generated room ID from your partner."}
         >
             <div className="flex w-full flex-col gap-2">
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8"
+                        className="space-y-2"
                     >
                         <FormField
                             control={form.control}
@@ -134,9 +134,15 @@ function JoinRoomByIdModal() {
                                 </FormItem>
                             )}
                         />
-                        <LoadingButton loading={isLoading} type="submit">
-                            Join Room
-                        </LoadingButton>
+                        <div className="pt-4">
+                            <LoadingButton
+                                loading={isLoading}
+                                type="submit"
+                                className="w-full"
+                            >
+                                Join Room
+                            </LoadingButton>
+                        </div>
                     </form>
                 </Form>
             </div>
