@@ -3,11 +3,17 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Modal from "@/components/ui/modal"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 function JoinRoomByIdModal() {
+    const router = useRouter()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [input, setInput] = useState("")
+
+    function handleClick() {
+        router.push(`/room/${input}`)
+    }
 
     return (
         <Modal
@@ -32,8 +38,14 @@ function JoinRoomByIdModal() {
             desc={"Please enter the generated room ID from your partner."}
         >
             <div className="flex w-full flex-col gap-2">
-                <Input placeholder="123456" type="text" />
-                <Button>Join Room</Button>
+                <Input
+                    placeholder="123456"
+                    type="text"
+                    onChange={({ target }) => {
+                        setInput(target.value)
+                    }}
+                />
+                <Button onClick={handleClick}>Join Room</Button>
             </div>
         </Modal>
     )
