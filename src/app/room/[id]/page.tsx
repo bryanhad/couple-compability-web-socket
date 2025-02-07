@@ -1,4 +1,5 @@
 import WaitingPartnerFallback from "@/components/fallbacks/WaitingPartnerFallback"
+import CompabilityForm from "@/components/forms/CompabilityForm"
 
 type Props = {
     params: Promise<{ id: string }>
@@ -9,9 +10,7 @@ async function RoomIdPage({ params }: Props) {
 
     return (
         <WaitingPartnerFallback currentRoomId={id}>
-            <div>
-                <h1>This is room {id}</h1>
-            </div>
+            <CompabilityForm />
         </WaitingPartnerFallback>
     )
 }

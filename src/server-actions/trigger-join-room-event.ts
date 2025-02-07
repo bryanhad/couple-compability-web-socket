@@ -5,6 +5,6 @@ import { WSEvents } from "@/utils/constants"
 
 const EVENT_NAME: WSEvents = "join-room"
 
-export async function triggerJoinRoomEvent(roomId: string) {
-    await pusherServer.trigger(roomId, EVENT_NAME, true)
+export async function triggerJoinRoomEvent(roomId: string, displayName: string | null) {
+    await pusherServer.trigger(`private-${roomId}`, EVENT_NAME, displayName ?? 'your partner')
 }

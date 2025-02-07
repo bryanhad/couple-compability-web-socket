@@ -1,22 +1,23 @@
 "use client"
 
 import { PropsWithChildren, useState } from "react"
-import { RoomIdContext } from "./room-id-context"
+import { PusherClientContext } from "./pusher-client-context"
+import Pusher from "pusher-js"
 
 function ContextProviders({ children }: PropsWithChildren) {
-    const [generatedRoomId, setGeneratedRoomId] = useState("")
-    const [generatedQR, setGeneratedQR] = useState("")
+    const [pusherClient, setPusherClient] = useState<Pusher | null>(null)
+    const [displayName, setDisplayName] = useState<string | null>(null)
     return (
-        <RoomIdContext.Provider
+        <PusherClientContext.Provider
             value={{
-                generatedRoomId,
-                setGeneratedRoomId,
-                generatedQR,
-                setGeneratedQR,
+                pusherClient,
+                setPusherClient,
+                displayName,
+                setDisplayName,
             }}
         >
             {children}
-        </RoomIdContext.Provider>
+        </PusherClientContext.Provider>
     )
 }
 

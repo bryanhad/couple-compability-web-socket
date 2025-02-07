@@ -1,13 +1,15 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import Modal from "@/components/ui/modal"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import LoadingButton from "@/components/buttons/LoadingButton"
+import { ROOM_ROLE_KEY } from "@/utils/constants"
+import { generateRandomId } from "@/utils/server"
+import Modal from "@/components/ui/modal"
 import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
     Form,
     FormControl,
@@ -16,48 +18,40 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import LoadingButton from "../buttons/LoadingButton"
+import { Input } from "@/components/ui/input"
 import { createPusherClient } from "@/lib/pusher/client"
-import { useToast } from "@/hooks/use-toast"
 import { usePusherClientContext } from "@/context/pusher-client-context"
-import { generateRandomId } from "@/utils/server"
-import { ROOM_ROLE_KEY } from "@/utils/constants"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
         message: "Display name must be at least 3 characters.",
     }),
-    roomId: z.string().min(6, {
-        message: "Room id must be at least 6 characters.",
-    }),
 })
 
-function JoinRoomByIdModal() {
+function CreateRoomModal() {
     const { setPusherClient, setDisplayName } = usePusherClientContext()
-    const { toast } = useToast()
     const router = useRouter()
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             displayName: "",
-            roomId: "",
         },
     })
-    async function onSubmit({
-        displayName,
-        roomId,
-    }: z.infer<typeof formSchema>) {
+
+    async function onSubmit({ displayName }: z.infer<typeof formSchema>) {
         setErrorMessage(null)
         setIsLoading(true)
         try {
             const newPusherClient = createPusherClient(displayName, toast)
-            setPusherClient(newPusherClient)
             setDisplayName(displayName)
-            localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
-            router.push(`/room/${roomId}`)
+            setPusherClient(newPusherClient)
+            const id = generateRandomId()
+            localStorage.setItem(ROOM_ROLE_KEY, `creator-${id}`)
+            router.push(`/room/${id}`)
         } catch (err) {
             if (err instanceof Error) {
                 setErrorMessage(err.message)
@@ -83,16 +77,18 @@ function JoinRoomByIdModal() {
                 }
             }}
             buttonCustom={
-                <Button
+                <LoadingButton
+                    loading={isLoading}
+                    type="button"
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
                 >
-                    Join Room
-                </Button>
+                    Create Room
+                </LoadingButton>
             }
-            title={"Enter Test Room ID"}
-            desc={"Please enter the generated room ID from your partner."}
+            title={"Please enter your display name"}
+            desc={"Your display name will be used for the compability result."}
         >
             <div className="flex w-full flex-col gap-2">
                 <Form {...form}>
@@ -109,24 +105,6 @@ function JoinRoomByIdModal() {
                                     <FormControl>
                                         <Input
                                             placeholder="Bambang"
-                                            type="text"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="roomId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Room ID</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="123456"
-                                            type="text"
                                             {...field}
                                         />
                                     </FormControl>
@@ -135,7 +113,7 @@ function JoinRoomByIdModal() {
                             )}
                         />
                         <LoadingButton loading={isLoading} type="submit">
-                            Join Room
+                            Go To Room
                         </LoadingButton>
                     </form>
                 </Form>
@@ -144,4 +122,4 @@ function JoinRoomByIdModal() {
     )
 }
 
-export default JoinRoomByIdModal
+export default CreateRoomModal

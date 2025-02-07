@@ -1,4 +1,4 @@
-import CreateRoomButton from "@/components/buttons/CreateRoomButton"
+import CreateRoomModal from "@/components/modals/CreateRoomModal"
 import JoinRoomByIdModal from "@/components/modals/JoinRoomByIdModal"
 
 function RoomPage() {
@@ -7,7 +7,7 @@ function RoomPage() {
             <h1>Here is the game:</h1>
             <p>You can start by</p>
             <div className="flex items-center gap-4">
-                <CreateRoomButton />
+                <CreateRoomModal />
                 <JoinRoomByIdModal />
             </div>
         </div>
