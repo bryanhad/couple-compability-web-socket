@@ -14,7 +14,8 @@ type Props = PropsWithChildren & {
     currentRoomId: string
 }
 
-const EVENT_NAME: WSEvents = "join-room"
+const JOIN_ROOM_EVENT: WSEvents = "join-room"
+const SUBMIT_FORM_EVENT: WSEvents = "submit-form"
 
 function WaitingPartnerFallback({ currentRoomId, children }: Props) {
     const { pusherClient, displayName } = usePusherClientContext()
@@ -44,7 +45,6 @@ function WaitingPartnerFallback({ currentRoomId, children }: Props) {
             setErrorMessage(null)
             setIsLoading(true)
             try {
-                console.log("Triggering join-room event...")
                 await triggerJoinRoomEvent(currentRoomId, displayName)
             } catch (err) {
                 console.error("Error triggering join-room:", err)
@@ -78,14 +78,14 @@ function WaitingPartnerFallback({ currentRoomId, children }: Props) {
         }
     }, [])
 
-    // USE EFFECT FOR AUTHENTICATE USER, AND SUBSRIBE TO A CHANNEL
+    // USE EFFECT FOR SUBSRIBINGG TO A CHANNEL AND BIND TO EVENT
     useEffect(() => {
         if (!pusherClient) {
             return
         }
 
         const channel = pusherClient.subscribe(`private-${currentRoomId}`)
-        channel.bind(EVENT_NAME, (partnerName: boolean) => {
+        channel.bind(JOIN_ROOM_EVENT, (partnerName: boolean) => {
             if (isCreatorRef.current) {
                 toast({
                     variant: "default",
@@ -94,6 +94,9 @@ function WaitingPartnerFallback({ currentRoomId, children }: Props) {
                 })
             }
             setIsWaitingPartner(false)
+        })
+        channel.bind(SUBMIT_FORM_EVENT, (partnersAnswer: unknown) => {
+            console.log({ partnersAnswer })
         })
 
         const presenceChannel = pusherClient.subscribe(

@@ -29,7 +29,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-red-100 p-4 text-center">
+                <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-red-100 text-center">
                     <ContextProviders>{children}</ContextProviders>
                 </main>
                 <Toaster />

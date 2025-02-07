@@ -10,7 +10,9 @@ async function RoomIdPage({ params }: Props) {
 
     return (
         <WaitingPartnerFallback currentRoomId={id}>
-            <CompabilityForm />
+            <div className="w-full max-w-[90%]">
+                <CompabilityForm currentRoomId={id} />
+            </div>
         </WaitingPartnerFallback>
     )
 }
