@@ -22,7 +22,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
             setIsLoading(true)
             try {
                 const uri = await QRCode.toDataURL(
-                    `http://localhost:3000/room/${currentRoomId}/on-boarding`,
+                    `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/room/${currentRoomId}/on-boarding`,
                 )
                 setQrCodeURI(uri)
             } catch (err) {
