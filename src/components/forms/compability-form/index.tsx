@@ -9,51 +9,56 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { useToast } from "@/hooks/use-toast"
-import { triggerSubmitFormEvent } from "@/server-actions/trigger-submit-form-event"
+import { triggerJoinerSubmittedFormEvent } from "@/server-actions/trigger-joiner-submitted-form-event"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
-import LoadingButton from "../buttons/LoadingButton"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { favBoardGames, favColors, favFoods } from "./compability-form-data"
+import LoadingButton from "@/components/buttons/LoadingButton"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { CompabilityFormFields, compabilityFormSchema } from "./schema"
+import { favBoardGames, favColors, favFoods } from "./form-data"
+import { usePusherClientContext } from "@/context/pusher-client-context"
+import { triggerCreatorSubmittedFormEvent } from "@/server-actions/trigger-creator-submitted-form-event"
 
 type Props = {
     currentRoomId: string
 }
 
-const getValues = <T extends readonly { value: string }[]>(arr: T) =>
-    arr.map((item) => item.value)
-
-const formSchema = z.object({
-    favColor: z.string().refine((val) => getValues(favColors).includes(val), {
-        message: "You need to select a valid color!",
-    }),
-    favFood: z.string().refine((val) => getValues(favFoods).includes(val), {
-        message: "You need to select a valid food!",
-    }),
-    favBoardGame: z
-        .string()
-        .refine((val) => getValues(favBoardGames).includes(val), {
-            message: "You need to select a valid board game!",
-        }),
-})
-
 function CompabilityForm({ currentRoomId }: Props) {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { userInfo } = usePusherClientContext()
+    const form = useForm<CompabilityFormFields>({
+        resolver: zodResolver(compabilityFormSchema),
+        defaultValues: {
+            favBoardGame: undefined,
+            favColor: undefined,
+            favFood: undefined,
+        },
     })
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     // ON SUBMIT
-    async function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: CompabilityFormFields) {
+        if (!userInfo) {
+            return
+        }
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            console.log(values)
-            await triggerSubmitFormEvent(currentRoomId, values)
+            if (userInfo?.role === "creator") {
+                await triggerCreatorSubmittedFormEvent(
+                    currentRoomId,
+                    userInfo.displayName,
+                    values,
+                )
+            } else {
+                await triggerJoinerSubmittedFormEvent(
+                    currentRoomId,
+                    userInfo.displayName,
+                    values,
+                )
+            }
         } catch (err) {
             if (err instanceof Error) {
                 setErrorMessage(err.message)

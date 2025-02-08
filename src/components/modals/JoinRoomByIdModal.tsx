@@ -33,7 +33,7 @@ const formSchema = z.object({
 })
 
 function JoinRoomByIdModal() {
-    const { setPusherClient, setDisplayName } = usePusherClientContext()
+    const { setPusherClient, setUserInfo } = usePusherClientContext()
     const { toast } = useToast()
     const router = useRouter()
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -55,8 +55,8 @@ function JoinRoomByIdModal() {
         try {
             const newPusherClient = createPusherClient(displayName, toast)
             setPusherClient(newPusherClient)
-            setDisplayName(displayName)
-            localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
+            setUserInfo({ displayName, role: "joiner" })
+            // localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
             router.push(`/room/${roomId}`)
         } catch (err) {
             if (err instanceof Error) {
@@ -92,7 +92,9 @@ function JoinRoomByIdModal() {
                 </Button>
             }
             title={"Enter Test Room ID"}
-            desc={"Please enter your desired display name and the generated room ID from your partner."}
+            desc={
+                "Please enter your desired display name and the generated room ID from your partner."
+            }
         >
             <div className="flex w-full flex-col gap-2">
                 <Form {...form}>

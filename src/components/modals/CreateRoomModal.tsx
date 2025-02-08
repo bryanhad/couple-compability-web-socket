@@ -1,15 +1,6 @@
 "use client"
 
-import { useToast } from "@/hooks/use-toast"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import LoadingButton from "@/components/buttons/LoadingButton"
-import { ROOM_ROLE_KEY } from "@/utils/constants"
-import { generateRandomId } from "@/utils/server"
-import Modal from "@/components/ui/modal"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import {
     Form,
     FormControl,
@@ -19,8 +10,16 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { createPusherClient } from "@/lib/pusher/client"
+import Modal from "@/components/ui/modal"
 import { usePusherClientContext } from "@/context/pusher-client-context"
+import { useToast } from "@/hooks/use-toast"
+import { createPusherClient } from "@/lib/pusher/client"
+import { generateRandomId } from "@/utils/server"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
@@ -29,7 +28,7 @@ const formSchema = z.object({
 })
 
 function CreateRoomModal() {
-    const { setPusherClient, setDisplayName } = usePusherClientContext()
+    const { setPusherClient, setUserInfo } = usePusherClientContext()
     const router = useRouter()
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
@@ -47,10 +46,10 @@ function CreateRoomModal() {
         setIsLoading(true)
         try {
             const newPusherClient = createPusherClient(displayName, toast)
-            setDisplayName(displayName)
+            setUserInfo({ displayName, role: "creator" })
             setPusherClient(newPusherClient)
             const id = generateRandomId()
-            localStorage.setItem(ROOM_ROLE_KEY, `creator-${id}`)
+            // localStorage.setItem(ROOM_ROLE_KEY, `creator-${id}`)
             router.push(`/room/${id}`)
         } catch (err) {
             if (err instanceof Error) {

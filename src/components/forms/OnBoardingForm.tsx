@@ -35,7 +35,7 @@ function OnBoardingForm({ roomId }: Props) {
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    const { setPusherClient, setDisplayName } = usePusherClientContext()
+    const { setPusherClient, setUserInfo } = usePusherClientContext()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -49,9 +49,9 @@ function OnBoardingForm({ roomId }: Props) {
         setIsLoading(true)
         try {
             const newPusherClient = createPusherClient(displayName, toast)
-            setDisplayName(displayName)
+            setUserInfo({ displayName, role: "joiner" })
             setPusherClient(newPusherClient)
-            localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
+            // localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
             router.push(`/room/${roomId}`)
         } catch (err) {
             if (err instanceof Error) {
