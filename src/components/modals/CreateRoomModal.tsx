@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { Button } from "../ui/button"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
@@ -75,15 +76,20 @@ function CreateRoomModal() {
                 }
             }}
             buttonCustom={
-                <LoadingButton
-                    loading={isLoading}
+                <Button
                     type="button"
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
+                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center"
                 >
-                    Create Room
-                </LoadingButton>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-nowrap text-lg">Create Room</p>
+                        <p className=" text-wrap text-primary-foreground/70">
+                            Make the first move!
+                        </p>
+                    </div>
+                </Button>
             }
             title={"Please enter your display name"}
             desc={"Your display name will be used for the compability result."}

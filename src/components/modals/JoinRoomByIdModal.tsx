@@ -81,11 +81,18 @@ function JoinRoomByIdModal() {
             }}
             buttonCustom={
                 <Button
+                    type="button"
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
+                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center"
                 >
-                    Join Room
+                    <div className="flex flex-col gap-1">
+                        <p className="text-nowrap text-lg">Join Room</p>
+                        <p className="text-wrap text-primary-foreground/70">
+                            Take your turn!
+                        </p>
+                    </div>
                 </Button>
             }
             title={"Enter Test Room ID"}

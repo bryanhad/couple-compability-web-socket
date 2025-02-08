@@ -13,10 +13,11 @@ function LoadingButton({
     type = "submit",
     loadingMessage,
     noLoadingMessage = false,
+    className,
     ...props
 }: Props) {
     return (
-        <Button {...props} type={type} disabled={props.disabled || loading}>
+        <Button className={className} {...props} type={type} disabled={props.disabled || loading}>
             <span className="flex items-center justify-center gap-1">
                 {loading && <Loader2 size={16} className="animate-spin" />}
                 {loading

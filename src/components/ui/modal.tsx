@@ -61,14 +61,14 @@ function Modal({
                     <DialogHeader className="flex flex-col gap-1 items-center">
                         <DialogTitle
                             className={cn({
-                                "text-center leading-snug": centerText,
+                                "text-center leading-snug text-primary": centerText,
                             })}
                         >
                             {title}
                         </DialogTitle>
                         {desc && (
                             <DialogDescription
-                                className={cn({ "text-center max-w-[340px]": centerText })}
+                                className={cn({ "text-center max-w-[340px] text-foreground/60": centerText })}
                             >
                                 {desc}
                             </DialogDescription>

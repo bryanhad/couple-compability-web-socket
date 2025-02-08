@@ -21,7 +21,7 @@ export default function Home() {
                 </div>
                 <span className="text-end">Just Rolling the Dice?</span>
             </h1>
-            <p className="mb-8 w-[70%] max-w-[400px] text-lg text-gray-700 md:mb-10 md:text-xl">
+            <p className="mb-8 w-[70%] max-w-[400px] text-lg md:mb-10 md:text-xl">
                 Find out if you and your partner are truly in sync!
             </p>
             <Button
