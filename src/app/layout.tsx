@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
+import Image from "next/image"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -27,12 +28,33 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/80 antialiased`}
             >
-                <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-red-100 text-center">
+                <div className="flex justify-end pr-2 pt-2">
+                    <Image
+                        alt="mamasays-logo"
+                        src="/mamasays-logo.png"
+                        width={150}
+                        height={50}
+                    />
+                </div>
+                <main className="flex flex-[1] flex-col items-center justify-center pb-8">
                     <ContextProviders>{children}</ContextProviders>
                 </main>
                 <Toaster />
+                <footer className="flex justify-center py-2 text-center text-xs text-muted-foreground">
+                    <div className="w-[70%] max-w-[500px] space-y-1 mb-2">
+                        <p>
+                            Built with love by{" "}
+                            <span className="text-primary text-nowrap">Bryan Hadinata</span>
+                            <br />
+                        </p>
+                        <p>
+                            Enjoy the game, and may your love be as strong as a
+                            well-played strategy!
+                        </p>
+                    </div>
+                </footer>
             </body>
         </html>
     )

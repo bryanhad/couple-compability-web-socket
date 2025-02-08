@@ -1,25 +1,34 @@
 import { Button } from "@/components/ui/button"
-import { Heart } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function Home() {
     return (
-        <div className="max-w-2xl">
-            <h1 className="mb-4 text-4xl font-bold text-red-600 md:text-6xl">
-                Love Match at Mamasays
+        <div className="flex w-full max-w-2xl flex-col items-center text-center">
+            <h1 className="mb-4 flex max-w-min flex-col text-4xl font-bold leading-none text-primary md:mb-6 md:text-6xl">
+                <span className="text-start text-xl">Are You a</span>
+                <span className="text-nowrap">Perfect Match</span>
+                <div className="relative self-center">
+                    <Image
+                        alt="heart-icon"
+                        src="/heart.png"
+                        width={50}
+                        height={50}
+                    />
+                    <span className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 pb-1 text-xl text-white">
+                        or
+                    </span>
+                </div>
+                <span className="text-end">Just Rolling the Dice?</span>
             </h1>
-            <p className="mb-8 text-xl text-gray-700 md:text-2xl">
-                Is your love as perfect as a full house in Monopoly? Find out if
-                you and your partner are on the same game board!
+            <p className="mb-8 w-[70%] max-w-[400px] text-lg text-gray-700 md:mb-10 md:text-xl">
+                Find out if you and your partner are truly in sync!
             </p>
             <Button
                 asChild
-                className="bg-red-500 px-8 py-6 text-xl text-white hover:bg-red-600"
+                className="bg-primary px-8 py-6 text-xl text-white hover:bg-red-600"
             >
-                <Link href="/room">
-                    <Heart className="mr-2 h-6 w-6" />
-                    Try out the test
-                </Link>
+                <Link href="/room">Ready to Play?</Link>
             </Button>
         </div>
     )
