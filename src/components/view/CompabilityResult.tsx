@@ -45,7 +45,7 @@ function CompabilityResult() {
                 </div>
                 <div>
                     <p className="font-semibold">
-                        Joiner's ({partnerInfo?.displayName}) Answer:
+                        Joiner&apos;s ({partnerInfo?.displayName}) Answer:
                     </p>
                     <p>{JSON.stringify(partnerInfo?.formValues)}</p>
                 </div>

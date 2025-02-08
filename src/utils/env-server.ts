@@ -7,6 +7,5 @@ const envServerSchema = z.object({
 
 // Parse and validate the environment variables
 const envServer = envServerSchema.parse(process.env)
-console.log(process.env)
 
 export default envServer

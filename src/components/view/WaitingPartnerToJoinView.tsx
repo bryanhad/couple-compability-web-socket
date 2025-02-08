@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable @next/next/no-img-element */
 
 import { useToast } from "@/hooks/use-toast"
 import { Frown, LoaderCircle } from "lucide-react"
@@ -38,6 +39,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
             }
         }
         generateRoomDetailsForPartner()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

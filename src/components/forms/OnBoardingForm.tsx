@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input"
 import { usePusherClientContext } from "@/context/pusher-client-context"
 import { useToast } from "@/hooks/use-toast"
 import { createPusherClient } from "@/lib/pusher/client"
-import { ROOM_ROLE_KEY } from "@/utils/constants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -51,7 +50,6 @@ function OnBoardingForm({ roomId }: Props) {
             const newPusherClient = createPusherClient(displayName, toast)
             setUserInfo({ displayName, role: "joiner" })
             setPusherClient(newPusherClient)
-            // localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
             router.push(`/room/${roomId}`)
         } catch (err) {
             if (err instanceof Error) {

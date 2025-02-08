@@ -49,7 +49,6 @@ function CreateRoomModal() {
             setUserInfo({ displayName, role: "creator" })
             setPusherClient(newPusherClient)
             const id = generateRandomId()
-            // localStorage.setItem(ROOM_ROLE_KEY, `creator-${id}`)
             router.push(`/room/${id}`)
         } catch (err) {
             if (err instanceof Error) {

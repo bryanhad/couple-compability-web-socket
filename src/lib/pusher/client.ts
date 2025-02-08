@@ -26,7 +26,7 @@ export function createPusherClient(
     )
 
     newPusherClient.signin()
-    newPusherClient.bind("pusher:signin_success", (data: unknown) => {
+    newPusherClient.bind("pusher:signin_success", () => {
         toast({
             variant: "default",
             title: "Hooray!",

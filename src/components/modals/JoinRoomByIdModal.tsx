@@ -20,8 +20,6 @@ import LoadingButton from "../buttons/LoadingButton"
 import { createPusherClient } from "@/lib/pusher/client"
 import { useToast } from "@/hooks/use-toast"
 import { usePusherClientContext } from "@/context/pusher-client-context"
-import { generateRandomId } from "@/utils/server"
-import { ROOM_ROLE_KEY } from "@/utils/constants"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
@@ -56,7 +54,6 @@ function JoinRoomByIdModal() {
             const newPusherClient = createPusherClient(displayName, toast)
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
-            // localStorage.setItem(ROOM_ROLE_KEY, `joiner-${roomId}`)
             router.push(`/room/${roomId}`)
         } catch (err) {
             if (err instanceof Error) {

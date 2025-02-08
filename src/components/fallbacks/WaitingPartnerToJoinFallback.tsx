@@ -2,13 +2,14 @@
 
 import { usePusherClientContext } from "@/context/pusher-client-context"
 import { useToast } from "@/hooks/use-toast"
-import { triggerJoinerJoinedRoomEvent } from "@/server-actions/trigger-joiner-joined-room-event"
+import { useTriggerJoinRoom } from "@/hooks/use-trigger-join-room"
+import { triggerCreatorHasBeenWaitingEvent } from "@/server-actions/trigger-creator-has-been-waiting-event"
 import { WSEvents } from "@/utils/constants"
+import { LoaderCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { PropsWithChildren, useEffect, useRef, useState } from "react"
 import { CompabilityFormFields } from "../forms/compability-form/schema"
 import WaitingPartnerToJoinView from "../view/WaitingPartnerToJoinView"
-import { triggerCreatorHasBeenWaitingEvent } from "@/server-actions/trigger-creator-has-been-waiting-event"
 
 type Props = PropsWithChildren & {
     currentRoomId: string
@@ -23,51 +24,22 @@ function WaitingPartnerJoinFallback({ currentRoomId, children }: Props) {
     const { pusherClient, userInfo, setPartnerInfo, setUserInfo } =
         usePusherClientContext()
     const router = useRouter()
-
     const [isWaitingPartner, setIsWaitingPartner] = useState(true)
+    const hasJoinedRef = useRef(false) // ✅ Prevent re-execution
 
     const { toast } = useToast()
-    const [isLoading, setIsLoading] = useState(false)
+    const { isLoading, triggerJoinRoom } = useTriggerJoinRoom(currentRoomId)
 
-    // USE EFFECT FOR THE "JOINER" AND THE "CREATOR"
     useEffect(() => {
-        if (!pusherClient) {
-            // if no pusherClient (e.g. the user refreshes the page..)
-            router.push("/room")
-        }
-
-        async function triggerJoinRoom() {
-            if (!userInfo) {
-                return
-            }
-            setIsLoading(true)
-            try {
-                await triggerJoinerJoinedRoomEvent(
-                    currentRoomId,
-                    userInfo.displayName,
-                )
-            } catch (err) {
-                let errMessage = ""
-                if (err instanceof Error) {
-                    errMessage = err.message
-                }
-                toast({
-                    variant: "destructive",
-                    title: "Oops!",
-                    description: errMessage || "Something went wrong!",
-                })
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        if (userInfo?.role === "joiner") {
-            triggerJoinRoom()
-        }
-    }, [])
+        if (hasJoinedRef.current) return // ✅ Prevent running more than once
+        hasJoinedRef.current = true
+        triggerJoinRoom()
+    }, [triggerJoinRoom])
 
     // USE EFFECT FOR SUBSRIBINGG TO A CHANNEL AND BIND TO EVENT
     useEffect(() => {
         if (!pusherClient) {
+            router.push("/room")
             return
         }
 
@@ -153,24 +125,24 @@ function WaitingPartnerJoinFallback({ currentRoomId, children }: Props) {
             },
         )
 
-        // const presenceChannel = pusherClient.subscribe(
-        //     `presence-${currentRoomId}`,
-        // ) as PresenceChannel
-        // presenceChannel.bind(
-        //     "pusher:subscription_succeeded",
-        //     (members: unknown) => {
-        //         console.log({ members })
-        //     },
-        // )
-
         return () => {
             channel.unbind()
             channel.unsubscribe()
         }
+        // userInfo depedency to update the state of the functions on the bind to use the most updated userInfo
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userInfo])
 
     if (userInfo?.role === "creator" && isWaitingPartner) {
         return <WaitingPartnerToJoinView currentRoomId={currentRoomId} />
+    }
+
+    if (isLoading) {
+        return (
+            <div>
+                <LoaderCircle size={70} className="shrink-0 animate-spin" />
+            </div>
+        )
     }
 
     return <>{children}</>

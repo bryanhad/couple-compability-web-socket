@@ -86,7 +86,7 @@ function CompabilityForm({ currentRoomId }: Props) {
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start gap-2">
                                 <FormLabel>
-                                    What's your favorite color?
+                                    What&apos;s your favorite color?
                                 </FormLabel>
                                 <FormControl>
                                     <RadioGroup
@@ -121,7 +121,7 @@ function CompabilityForm({ currentRoomId }: Props) {
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start gap-2">
                                 <FormLabel>
-                                    What's your favorite food?
+                                    What&apos;s your favorite food?
                                 </FormLabel>
                                 <FormControl>
                                     <RadioGroup
@@ -156,7 +156,7 @@ function CompabilityForm({ currentRoomId }: Props) {
                         render={({ field }) => (
                             <FormItem className="flex flex-col items-start gap-2">
                                 <FormLabel>
-                                    What's your favorite board game?
+                                    What&apos;s your favorite board game?
                                 </FormLabel>
                                 <FormControl>
                                     <RadioGroup
