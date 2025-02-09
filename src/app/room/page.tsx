@@ -4,7 +4,7 @@ import JoinRoomByIdModal from "@/components/modals/JoinRoomByIdModal"
 function RoomPage() {
     return (
         <div className="flex flex-col items-center gap-4 text-center md:gap-6">
-            <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl">
+            <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl pulse">
                 Time to Choose Your Path!
             </h1>
             {/* <ul className="w-[80%] text-center">

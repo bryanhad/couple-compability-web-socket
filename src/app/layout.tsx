@@ -30,14 +30,14 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/80 antialiased`}
             >
-                <div className="flex justify-end pr-2 pt-2">
+                <header className="flex justify-end pr-4 py-4">
                     <Image
                         alt="mamasays-logo"
                         src="/mamasays-logo.png"
                         width={150}
                         height={50}
                     />
-                </div>
+                </header>
                 <main className="flex flex-[1] flex-col items-center justify-center px-4">
                     <ContextProviders>{children}</ContextProviders>
                 </main>

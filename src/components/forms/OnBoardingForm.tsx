@@ -70,26 +70,31 @@ function OnBoardingForm({ roomId }: Props) {
     }
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <FormField
-                    control={form.control}
-                    name="displayName"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Display Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Bambang" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <LoadingButton loading={isLoading} type="submit">
-                    Join Room
-                </LoadingButton>
-            </form>
-        </Form>
+        <div className="p-6 rounded-md shadow-md bg-white w-full max-w-[400px]">
+            <h2 className="text-muted-foreground mb-3">What's your name, love?</h2>
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                >
+                    <FormField
+                        control={form.control}
+                        name="displayName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input placeholder="Enter your name" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <LoadingButton loading={isLoading} type="submit" className="rounded-full px-6">
+                        Join Room
+                    </LoadingButton>
+                </form>
+            </Form>
+        </div>
     )
 }
 

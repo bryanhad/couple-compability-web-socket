@@ -13,6 +13,7 @@ type Props = {
 }
 
 function WaitingPartnerToJoinView({ currentRoomId }: Props) {
+    const { userInfo } = usePusherClientContext()
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -24,7 +25,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
             setIsLoading(true)
             try {
                 const uri = await QRCode.toDataURL(
-                    `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/room/${currentRoomId}/on-boarding`,
+                    `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/room/${currentRoomId}/on-boarding?cname=${userInfo?.displayName}`,
                 )
                 setQrCodeURI(uri)
             } catch (err) {

@@ -75,9 +75,10 @@ body {
         width: 58px;
         height: 45px;
         margin-top: 10px;
-      }
-      
-      #heart::before, #heart::after {
+    }
+
+    #heart::before,
+    #heart::after {
         content: "";
         position: absolute;
         top: 0;
@@ -85,22 +86,21 @@ body {
         height: 42px;
         border-radius: 50px 50px 0 0;
         background: hsl(var(--primary));
-      }
-      
-      #heart::before {
+    }
+
+    #heart::before {
         left: 29;
         transform: rotate(-52deg);
         transform-origin: 0 100%;
-      }
-      
-      #heart::after {
+    }
+
+    #heart::after {
         left: 0;
         transform: rotate(52deg);
         transform-origin: 100% 100%;
-      }
+    }
 
-
-      .back {
+    .back {
         position: fixed;
         padding: 0;
         margin: 0;
@@ -110,11 +110,11 @@ body {
         height: 100%;
         background: white;
         animation-name: backdiv;
-        animation-duration: 1s; 
+        animation-duration: 1s;
         animation-iteration-count: infinite;
-      }
-    
-      .heart-animation {
+    }
+
+    .heart-animation {
         position: absolute;
         margin: auto;
         top: 0;
@@ -128,8 +128,8 @@ body {
         animation-name: beat;
         animation-duration: 1s;
         animation-iteration-count: infinite;
-      }
-      .heart-animation:after {
+    }
+    .heart-animation:after {
         background-color: pink;
         content: "";
         border-radius: 50%;
@@ -138,8 +138,8 @@ body {
         height: 50px;
         top: 0px;
         left: 25px;
-      }
-      .heart-animation:before {
+    }
+    .heart-animation:before {
         background-color: pink;
         content: "";
         border-radius: 50%;
@@ -148,29 +148,87 @@ body {
         height: 50px;
         top: -25px;
         left: 0px;
-      }
-    
-      @keyframes backdiv {
-        50% {
-          background: #ffe6f2;
-        }
-      }
-    
-      @keyframes beat {
-        0% {
-          transform: scale(1) rotate(-45deg);
-        }
-        50% {
-          transform: scale(0.6) rotate(-45deg);
-        }
-      }
+    }
 
-      .bounce {
+    @keyframes backdiv {
+        50% {
+            background: #ffe6f2;
+        }
+    }
+
+    @keyframes beat {
+        0% {
+            transform: scale(1) rotate(-45deg);
+        }
+        50% {
+            transform: scale(0.6) rotate(-45deg);
+        }
+    }
+
+    .bounce {
         animation: bounce 2s ease infinite;
-      }
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-        40% {transform: translateY(-12px);}
-        60% {transform: translateY(-2px);}
-      }
+    }
+    @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-12px);
+        }
+        60% {
+            transform: translateY(-2px);
+        }
+    }
+
+    .pulse {
+        animation: pulse 1.5s infinite ease-in-out alternate;
+    }
+    @keyframes pulse {
+        from {
+            transform: scale(0.92);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    #pulsingheart { 
+      position: relative; 
+      width: 48px; 
+      height: 40px;
+      
+    } 
+    
+    #pulsingheart:before, #pulsingheart:after { 
+      position: absolute; 
+      content: ""; 
+      left: 25px; 
+      top: 0; 
+      width: 25px; 
+      height: 40px; 
+      background: hsl(0, 68%, 52%); 
+      border-radius: 20px 20px 0 0; 
+      transform: rotate(-45deg);  
+      transform-origin: 0 100%;
+      animation:pulsecolor 1s infinite;
+    } 
+    
+    #pulsingheart:after { 
+      left: 0; 
+      transform: rotate(45deg); 
+      transform-origin :100% 100%;
+      animation:pulsecolor 1s infinite;
+    }
+    
+    @keyframes pulsingheart {
+      10% {transform: scale(1.1)}
+    }
+    
+    @keyframes pulsecolor {
+      40% {background: hsl(0 84% 60%)}
+    }
 }
