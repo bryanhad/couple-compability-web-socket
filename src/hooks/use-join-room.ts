@@ -16,11 +16,6 @@ export function useJoinRoom(currentRoomId: string) {
         hasJoinedRef.current = true
 
         async function triggerJoinRoom() {
-            // if (!pusherClient || !userInfo) {
-            //     // if no pusherClient (e.g. the user refreshes the page..)
-            //     router.push("/room")
-            //     return
-            // }
             if (!userInfo || userInfo.role === "creator") {
                 return
             }
