@@ -23,10 +23,10 @@ import { usePusherClientContext } from "@/context/pusher-client-context"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
-        message: "Display name must be at least 3 characters.",
+        message: "Name must be at least 3 characters.",
     }),
     roomId: z.string().min(6, {
-        message: "Room id must be at least 6 characters.",
+        message: "Room ID must be at least 6 characters.",
     }),
 })
 
@@ -51,10 +51,16 @@ function JoinRoomByIdModal() {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName, toast, 'joiner')
+            const newPusherClient = createPusherClient(
+                displayName,
+                toast,
+                "joiner",
+            )
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
-            const lowerCasedRoomId = roomId.replace(/[A-Z]/g, match => match.toLowerCase());
+            const lowerCasedRoomId = roomId.replace(/[A-Z]/g, (match) =>
+                match.toLowerCase(),
+            )
             router.push(`/room/${lowerCasedRoomId}`)
         } catch (err) {
             if (err instanceof Error) {
@@ -86,7 +92,7 @@ function JoinRoomByIdModal() {
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
-                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center"
+                    className="flex h-28 flex-[1] flex-col justify-center rounded-md py-4 text-center"
                 >
                     <div className="flex flex-col gap-1">
                         <p className="text-nowrap text-lg">Join Room</p>
@@ -98,7 +104,13 @@ function JoinRoomByIdModal() {
             }
             title={"Enter Test Room ID"}
             desc={
-                "Please enter your desired display name and the generated room ID from your partner."
+                <p>
+                    Please enter your <span className="text-primary">name</span>
+                    , and
+                    <br />
+                    the <span className="text-primary">room ID</span> from your
+                    partner.
+                </p>
             }
         >
             <div className="flex w-full flex-col gap-2">
@@ -112,10 +124,9 @@ function JoinRoomByIdModal() {
                             name="displayName"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Display Name</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Bambang"
+                                            placeholder="Please enter your name"
                                             type="text"
                                             {...field}
                                         />
@@ -129,7 +140,6 @@ function JoinRoomByIdModal() {
                             name="roomId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Room ID</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder="123456"

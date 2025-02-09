@@ -24,7 +24,7 @@ import { Button } from "../ui/button"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
-        message: "Display name must be at least 3 characters.",
+        message: "Name must be at least 3 characters.",
     }),
 })
 
@@ -81,7 +81,7 @@ function CreateRoomModal() {
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
-                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center"
+                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center rounded-md"
                 >
                     <div className="flex flex-col gap-1">
                         <p className="text-nowrap text-lg">Create Room</p>
@@ -91,8 +91,8 @@ function CreateRoomModal() {
                     </div>
                 </Button>
             }
-            title={"Please enter your display name"}
-            desc={"Your display name will be used for the compability result."}
+            title={"Please enter your name"}
+            desc={"Your name will be used for the compability result."}
         >
             <div className="flex w-full flex-col gap-2">
                 <Form {...form}>
@@ -105,10 +105,9 @@ function CreateRoomModal() {
                             name="displayName"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Display Name</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Bambang"
+                                            placeholder="Please enter your name"
                                             {...field}
                                         />
                                     </FormControl>

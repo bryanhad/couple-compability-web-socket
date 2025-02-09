@@ -30,7 +30,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/80 antialiased`}
             >
-                <header className="flex justify-end pr-4 py-4">
+                <header className="flex justify-end py-4 pr-4">
                     <Image
                         alt="mamasays-logo"
                         src="/mamasays-logo.png"
@@ -42,11 +42,13 @@ export default function RootLayout({
                     <ContextProviders>{children}</ContextProviders>
                 </main>
                 <Toaster />
-                <footer className="flex justify-center pt-2 pb-3 text-center text-xs text-muted-foreground">
-                    <div className="w-[70%] max-w-[500px] space-y-1 mb-2">
+                <footer className="flex justify-center pb-3 pt-6 text-center text-xs text-muted-foreground">
+                    <div className="mb-2 w-[70%] max-w-[500px] space-y-1">
                         <p>
-                            Built with love by{" "}
-                            <span className="text-primary text-nowrap">Bryan Hadinata</span>
+                            Made with love by{" "}
+                            <span className="text-nowrap text-primary">
+                                Bryan Hadinata
+                            </span>
                             <br />
                         </p>
                         <p>

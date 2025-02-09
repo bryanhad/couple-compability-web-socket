@@ -14,7 +14,8 @@ type Props = PropsWithChildren & {
 
 function WaitingPartnerJoinFallback({ currentRoomId, children }: Props) {
     const { pusherClient } = useNoPusherClientGuard()
-    const { channelMemberCount, userInfo } = usePusherClientContext()
+    const { channelMemberCount, userInfo, partnerInfo } =
+        usePusherClientContext()
     const { isWaitingPartner } = useChannelSubscription(currentRoomId)
     const { isJoiningRoom } = useJoinRoom(currentRoomId)
 
@@ -33,10 +34,10 @@ function WaitingPartnerJoinFallback({ currentRoomId, children }: Props) {
         return <WaitingPartnerToJoinView currentRoomId={currentRoomId} />
     }
 
-    if (isJoiningRoom) {
+    if (isJoiningRoom || !partnerInfo) {
         return (
             <div>
-                <LoaderCircle size={70} className="shrink-0 animate-spin" />
+                <LoaderCircle size={120} className="shrink-0 animate-spin" />
             </div>
         )
     }

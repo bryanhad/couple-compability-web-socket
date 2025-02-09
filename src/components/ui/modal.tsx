@@ -8,12 +8,13 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { cn } from "@/utils/shadcn"
+import React from "react"
 
 type ModalProps = {
     centerText?: boolean
     children: React.ReactNode
     title?: string
-    desc?: string
+    desc?: React.ReactNode
     open?: boolean
     onOpenChange?: (open: boolean) => void
     className?: string
@@ -68,6 +69,7 @@ function Modal({
                         </DialogTitle>
                         {desc && (
                             <DialogDescription
+                                asChild={(typeof desc === 'string') === false}
                                 className={cn({ "text-center max-w-[340px] text-foreground/60": centerText })}
                             >
                                 {desc}

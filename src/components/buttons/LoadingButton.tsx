@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react"
 import { Button, ButtonProps } from "@/components/ui/button"
+import { cn } from "@/utils/shadcn"
 
 type Props = {
     loading: boolean
@@ -17,7 +18,7 @@ function LoadingButton({
     ...props
 }: Props) {
     return (
-        <Button className={className} {...props} type={type} disabled={props.disabled || loading}>
+        <Button className={cn('rounded-full', className)} {...props} type={type} disabled={props.disabled || loading}>
             <span className="flex items-center justify-center gap-1">
                 {loading && <Loader2 size={16} className="animate-spin" />}
                 {loading

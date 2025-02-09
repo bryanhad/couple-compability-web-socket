@@ -5,14 +5,18 @@ const getValues = <T extends readonly { value: string }[]>(arr: T) =>
     arr.map((item) => item.value)
 
 export const compabilityFormSchema = z.object({
-    favColor: z.string().refine((val) => getValues(favColors).includes(val), {
-        message: "You need to select a valid color!",
-    }),
-    favFood: z.string().refine((val) => getValues(favFoods).includes(val), {
-        message: "You need to select a valid food!",
-    }),
+    favColor: z
+        .string({ required_error: "Please select one of the options" })
+        .refine((val) => getValues(favColors).includes(val), {
+            message: "You need to select a valid color!",
+        }),
+    favFood: z
+        .string({ required_error: "Please select one of the options" })
+        .refine((val) => getValues(favFoods).includes(val), {
+            message: "You need to select a valid food!",
+        }),
     favBoardGame: z
-        .string()
+        .string({ required_error: "Please select one of the options" })
         .refine((val) => getValues(favBoardGames).includes(val), {
             message: "You need to select a valid board game!",
         }),

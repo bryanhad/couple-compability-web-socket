@@ -25,7 +25,7 @@ type Props = {
 }
 
 function CompabilityForm({ currentRoomId }: Props) {
-    const { userInfo } = usePusherClientContext()
+    const { userInfo, partnerInfo } = usePusherClientContext()
     const form = useForm<CompabilityFormFields>({
         resolver: zodResolver(compabilityFormSchema),
         defaultValues: {
@@ -74,44 +74,58 @@ function CompabilityForm({ currentRoomId }: Props) {
     }
 
     return (
-        <div className="w-full rounded-md bg-white px-6 py-6">
+        <div className="w-full rounded-md border bg-white px-6 py-6">
+            <div className="mb-5 text-center">
+                <h1 className="mb-3 text-2xl font-bold leading-none text-primary md:text-3xl">
+                    Time to Roll the Dice of Love!
+                </h1>
+                <p className="text-muted-foreground">
+                    Let's see if you're on the same board as{" "}
+                    <span className="font-semibold text-primary">
+                        {partnerInfo
+                            ? partnerInfo.displayName
+                            : "your special someone"}
+                    </span>..
+                    👀
+                </p>
+            </div>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
+                    className="space-y-3"
                 >
                     <FormField
                         control={form.control}
                         name="favColor"
                         render={({ field }) => (
-                            <FormItem className="flex flex-col items-start gap-2">
-                                <FormLabel>
+                            <FormItem className="flex flex-col items-start">
+                                <FormLabel className="font-semibold">
                                     What&apos;s your favorite color?
                                 </FormLabel>
+                                <FormMessage />
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        className="flex flex-col space-y-1"
+                                        className="flex flex-col gap-1"
                                     >
                                         {favColors.map((c) => (
                                             <FormItem
                                                 key={c.value}
-                                                className="flex items-center space-x-3 space-y-0"
+                                                className="flex items-center space-x-1 space-y-0"
                                             >
                                                 <FormControl>
                                                     <RadioGroupItem
                                                         value={c.value}
                                                     />
                                                 </FormControl>
-                                                <FormLabel className="font-normal">
+                                                <FormLabel className="p-2 font-normal">
                                                     {c.label}
                                                 </FormLabel>
                                             </FormItem>
                                         ))}
                                     </RadioGroup>
                                 </FormControl>
-                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -119,34 +133,34 @@ function CompabilityForm({ currentRoomId }: Props) {
                         control={form.control}
                         name="favFood"
                         render={({ field }) => (
-                            <FormItem className="flex flex-col items-start gap-2">
-                                <FormLabel>
+                            <FormItem className="flex flex-col items-start">
+                                <FormLabel className="font-semibold">
                                     What&apos;s your favorite food?
                                 </FormLabel>
+                                <FormMessage />
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        className="flex flex-col space-y-1"
+                                        className="flex flex-col gap-1"
                                     >
-                                        {favFoods.map((f) => (
+                                        {favFoods.map((c) => (
                                             <FormItem
-                                                key={f.value}
-                                                className="flex items-center space-x-3 space-y-0"
+                                                key={c.value}
+                                                className="flex items-center space-x-1 space-y-0"
                                             >
                                                 <FormControl>
                                                     <RadioGroupItem
-                                                        value={f.value}
+                                                        value={c.value}
                                                     />
                                                 </FormControl>
-                                                <FormLabel className="font-normal">
-                                                    {f.label}
+                                                <FormLabel className="p-2 font-normal">
+                                                    {c.label}
                                                 </FormLabel>
                                             </FormItem>
                                         ))}
                                     </RadioGroup>
                                 </FormControl>
-                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -154,38 +168,37 @@ function CompabilityForm({ currentRoomId }: Props) {
                         control={form.control}
                         name="favBoardGame"
                         render={({ field }) => (
-                            <FormItem className="flex flex-col items-start gap-2">
-                                <FormLabel>
+                            <FormItem className="flex flex-col items-start">
+                                <FormLabel className="font-semibold">
                                     What&apos;s your favorite board game?
                                 </FormLabel>
+                                <FormMessage />
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        className="flex flex-col space-y-1"
+                                        className="flex flex-col gap-1"
                                     >
-                                        {favBoardGames.map((b) => (
+                                        {favBoardGames.map((c) => (
                                             <FormItem
-                                                key={b.value}
-                                                className="flex items-center space-x-3 space-y-0"
+                                                key={c.value}
+                                                className="flex items-center space-x-1 space-y-0"
                                             >
                                                 <FormControl>
                                                     <RadioGroupItem
-                                                        value={b.value}
+                                                        value={c.value}
                                                     />
                                                 </FormControl>
-                                                <FormLabel className="font-normal">
-                                                    {b.label}
+                                                <FormLabel className="p-2 font-normal">
+                                                    {c.label}
                                                 </FormLabel>
                                             </FormItem>
                                         ))}
                                     </RadioGroup>
                                 </FormControl>
-                                <FormMessage />
                             </FormItem>
                         )}
                     />
-
                     <LoadingButton
                         loading={isLoading}
                         type="submit"
