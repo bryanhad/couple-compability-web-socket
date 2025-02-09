@@ -54,7 +54,8 @@ function JoinRoomByIdModal() {
             const newPusherClient = createPusherClient(displayName, toast, 'joiner')
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
-            router.push(`/room/${roomId}`)
+            const lowerCasedRoomId = roomId.replace(/[A-Z]/g, match => match.toLowerCase());
+            router.push(`/room/${lowerCasedRoomId}`)
         } catch (err) {
             if (err instanceof Error) {
                 setErrorMessage(err.message)
