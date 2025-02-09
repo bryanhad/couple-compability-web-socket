@@ -164,4 +164,13 @@ body {
           transform: scale(0.6) rotate(-45deg);
         }
       }
+
+      .bounce {
+        animation: bounce 2s ease infinite;
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-12px);}
+        60% {transform: translateY(-2px);}
+      }
 }

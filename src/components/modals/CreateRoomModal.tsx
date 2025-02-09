@@ -46,7 +46,7 @@ function CreateRoomModal() {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName, toast)
+            const newPusherClient = createPusherClient(displayName, toast, 'creator')
             setUserInfo({ displayName, role: "creator" })
             setPusherClient(newPusherClient)
             const id = generateRandomId()

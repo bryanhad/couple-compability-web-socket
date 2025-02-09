@@ -6,32 +6,32 @@ import PusherClient from "pusher-js"
 export function createPusherClient(
     displayName: string,
     toast: ReturnType<typeof useToast>["toast"],
+    role: "creator" | "joiner",
 ) {
     const newUserId = generateRandomId(32)
-    const newPusherClient = new PusherClient(
-        envClient.PUSHER_APP_KEY,
-        {
-            cluster: envClient.PUSHER_CLUSTER,
-            userAuthentication: {
-                endpoint: "/api/pusher-authenticate",
-                transport: "ajax",
-                params: { userId: newUserId, displayName },
-            },
-            channelAuthorization: {
-                endpoint: "/api/pusher-authorize",
-                transport: "ajax",
-                params: { userId: newUserId, displayName },
-            },
+    const newPusherClient = new PusherClient(envClient.PUSHER_APP_KEY, {
+        cluster: envClient.PUSHER_CLUSTER,
+        userAuthentication: {
+            endpoint: "/api/pusher-authenticate",
+            transport: "ajax",
+            params: { userId: newUserId, displayName },
         },
-    )
+        channelAuthorization: {
+            endpoint: "/api/pusher-authorize",
+            transport: "ajax",
+            params: { userId: newUserId, displayName },
+        },
+    })
 
     newPusherClient.signin()
     newPusherClient.bind("pusher:signin_success", () => {
-        toast({
-            variant: "default",
-            title: "Hooray!",
-            description: "Successfully connected to room",
-        })
+        if (role === "joiner") {
+            toast({
+                variant: "default",
+                title: "Hooray!",
+                description: "Successfully connected to room",
+            })
+        }
     })
 
     return newPusherClient

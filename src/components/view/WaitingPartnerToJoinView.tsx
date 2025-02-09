@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Frown, LoaderCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import QRCode from "qrcode"
+import RippleText from "../animated-text/RippleText"
 
 type Props = {
     currentRoomId: string
@@ -43,12 +44,19 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
     }, [])
 
     return (
-        <div>
-            <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl">
+        <div className="flex flex-col items-center">
+            <RippleText
+                text="Love is patient..."
+                className="mb-2 text-nowrap text-4xl font-bold leading-none text-primary md:text-6xl"
+            />
+            <p className="text-muted-foreground">
+                Waiting for your special someone...
+            </p>
+            {/* <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl bounce">
                 Love is patient..
-            </h1>
-            <div className="w-full">
-                <section className="flex h-[350px] items-center justify-center pb-3">
+            </h1> */}
+            <div className="mt-2 w-full">
+                <section className="flex h-[440px] items-center justify-center pb-3">
                     {errorMessage ? (
                         <div className="flex flex-col items-center justify-center gap-4">
                             <Frown size={120} className="shrink-0" />
@@ -59,7 +67,11 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                     ) : (
                         <>
                             {!isLoading && qrCodeURI ? (
-                                <div className="flex flex-col justify-center">
+                                <div className="flex flex-col items-center justify-center rounded-md bg-white py-5 shadow-md">
+                                    <p className="w-[70%] text-center text-sm text-foreground/60">
+                                        Share this QR code with your partner to
+                                        start the game!
+                                    </p>
                                     <div className="relative h-[280px] w-[280px] overflow-hidden">
                                         <img
                                             className="h-full w-full scale-[1.15]"
@@ -68,8 +80,10 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                                         />
                                     </div>
                                     <div className="flex flex-col items-center font-thin">
-                                        <h2>Room ID</h2>
-                                        <p className="text-xl font-semibold">
+                                        <h2 className="text-sm">
+                                            Or share this coom code:
+                                        </h2>
+                                        <p className="font-mono text-2xl font-semibold tracking-wider text-primary">
                                             {currentRoomId.toUpperCase()}
                                         </p>
                                     </div>

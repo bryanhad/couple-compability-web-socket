@@ -42,7 +42,7 @@ export default function RootLayout({
                     <ContextProviders>{children}</ContextProviders>
                 </main>
                 <Toaster />
-                <footer className="flex justify-center py-2 text-center text-xs text-muted-foreground">
+                <footer className="flex justify-center pt-2 pb-3 text-center text-xs text-muted-foreground">
                     <div className="w-[70%] max-w-[500px] space-y-1 mb-2">
                         <p>
                             Built with love by{" "}

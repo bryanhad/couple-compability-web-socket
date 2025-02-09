@@ -51,7 +51,7 @@ function JoinRoomByIdModal() {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName, toast)
+            const newPusherClient = createPusherClient(displayName, toast, 'joiner')
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
             router.push(`/room/${roomId}`)
