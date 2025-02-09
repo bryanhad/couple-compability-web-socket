@@ -6,6 +6,7 @@ import { useNoPusherClientGuard } from "@/hooks/use-no-pusher-client-guard"
 import { LoaderCircle } from "lucide-react"
 import { PropsWithChildren } from "react"
 import WaitingPartnerToJoinView from "../view/WaitingPartnerToJoinView"
+import { usePusherClientContext } from "@/context/pusher-client-context"
 
 type Props = PropsWithChildren & {
     currentRoomId: string
@@ -13,10 +14,14 @@ type Props = PropsWithChildren & {
 
 function WaitingPartnerJoinFallback({ currentRoomId, children }: Props) {
     const { pusherClient } = useNoPusherClientGuard()
+    const { channelMemberCount, userInfo } = usePusherClientContext()
     const { isWaitingPartner } = useChannelSubscription(currentRoomId)
     const { isJoiningRoom } = useJoinRoom(currentRoomId)
 
-    if (!pusherClient) {
+    if (
+        !pusherClient ||
+        (userInfo?.role === "joiner" && channelMemberCount < 2)
+    ) {
         return (
             <div>
                 <LoaderCircle className="shrink-0 animate-spin" size={120} />

@@ -17,6 +17,8 @@ type PusherClientContext = {
     setUserInfo: Dispatch<SetStateAction<UserInfo | null>>
     partnerInfo: UserInfo | null
     setPartnerInfo: Dispatch<SetStateAction<UserInfo | null>>
+    channelMemberCount: number
+    setChannelMemberCount: Dispatch<SetStateAction<number>>
 }
 
 export const PusherClientContext = createContext<PusherClientContext | null>(

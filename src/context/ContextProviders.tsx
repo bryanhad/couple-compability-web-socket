@@ -8,6 +8,7 @@ function ContextProviders({ children }: PropsWithChildren) {
     const [pusherClient, setPusherClient] = useState<Pusher | null>(null)
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
     const [partnerInfo, setPartnerInfo] = useState<UserInfo | null>(null)
+    const [channelMemberCount, setChannelMemberCount] = useState<number>(1)
 
     return (
         <PusherClientContext.Provider
@@ -18,6 +19,8 @@ function ContextProviders({ children }: PropsWithChildren) {
                 setUserInfo,
                 partnerInfo,
                 setPartnerInfo,
+                channelMemberCount,
+                setChannelMemberCount,
             }}
         >
             {children}

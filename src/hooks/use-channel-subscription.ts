@@ -6,6 +6,8 @@ import { triggerCreatorHasBeenWaitingEvent } from "@/server-actions/trigger-crea
 import { WSEvents } from "@/utils/constants"
 import { useEffect, useState } from "react"
 import { useToast } from "./use-toast"
+import { PresenceChannel } from "pusher-js"
+import { useRouter } from "next/navigation"
 
 const JOINER_JOINED_ROOM_EVENT: WSEvents = "joiner-joined-room"
 const CREATOR_HAS_BEEN_WAITING_EVENT: WSEvents = "creator-has-been-waiting"
@@ -13,8 +15,14 @@ const CREATOR_SUBMITTED_FORM_EVENT: WSEvents = "creator-submitted-form"
 const JOINER_SUBMITTED_FORM_EVENT: WSEvents = "joiner-submitted-form"
 
 export function useChannelSubscription(currentRoomId: string) {
-    const { pusherClient, userInfo, setPartnerInfo, setUserInfo } =
-        usePusherClientContext()
+    const router = useRouter()
+    const {
+        pusherClient,
+        userInfo,
+        setPartnerInfo,
+        setUserInfo,
+        setChannelMemberCount,
+    } = usePusherClientContext()
     const [isWaitingPartner, setIsWaitingPartner] = useState(true)
 
     const { toast } = useToast()
@@ -25,7 +33,14 @@ export function useChannelSubscription(currentRoomId: string) {
 
         const channel = pusherClient.subscribe(`private-${currentRoomId}`)
 
+        const presenceChannel = pusherClient.subscribe(
+            `presence-${currentRoomId}`,
+        ) as PresenceChannel
+
         channel.bind(JOINER_JOINED_ROOM_EVENT, (partnerName: string) => {
+            setChannelMemberCount(presenceChannel.members.count)
+
+            // creator block
             if (userInfo?.role === "creator") {
                 toast({
                     variant: "default",
@@ -37,6 +52,22 @@ export function useChannelSubscription(currentRoomId: string) {
                     currentRoomId,
                     userInfo.displayName,
                 )
+                // joiner block
+            } else {
+                if (presenceChannel.members.count < 2) {
+                    toast({
+                        variant: "destructive",
+                        title: "Room not found!",
+                        description: `Are you sure the room ID is correct?`,
+                    })
+                    router.push("/room")
+                } else {
+                    toast({
+                        variant: "default",
+                        title: "Hooray!",
+                        description: "Successfully connected to room",
+                    })
+                }
             }
             setIsWaitingPartner(false)
         })

@@ -24,15 +24,6 @@ export function createPusherClient(
     })
 
     newPusherClient.signin()
-    newPusherClient.bind("pusher:signin_success", () => {
-        if (role === "joiner") {
-            toast({
-                variant: "default",
-                title: "Hooray!",
-                description: "Successfully connected to room",
-            })
-        }
-    })
 
     return newPusherClient
 }
