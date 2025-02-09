@@ -6,6 +6,7 @@ import { Frown, LoaderCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import QRCode from "qrcode"
 import RippleText from "../animated-text/RippleText"
+import { usePusherClientContext } from "@/context/pusher-client-context"
 
 type Props = {
     currentRoomId: string
