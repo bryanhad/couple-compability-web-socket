@@ -35,7 +35,7 @@ export default function RootLayout({
                         alt="mamasays-logo"
                         src="/mamasays-logo.png"
                         width={150}
-                        height={50}
+                        height={25}
                     />
                 </header>
                 <main className="flex flex-[1] flex-col items-center justify-center px-4">

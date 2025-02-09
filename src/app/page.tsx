@@ -9,7 +9,7 @@ export default function Home() {
                 <span className="text-nowrap">Perfect Match</span>
                 <div
                     className="pulse-title relative self-center"
-                    style={{ animation: "pulsingheart 1s infinite;" }}
+                    style={{ animation: "pulsingheart 1s infinite" }}
                 >
                     <div id="pulsingheart" />
                     <span className="absolute right-1/2 top-[47%] -translate-y-1/2 translate-x-1/2 pb-1 text-xl leading-none text-white">

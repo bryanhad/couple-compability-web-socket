@@ -3,6 +3,7 @@
 import CompabilityResult from "../view/CompabilityResult"
 import CompabilityForm from "../forms/compability-form"
 import { usePusherClientContext } from "@/context/pusher-client-context"
+import WaitingPartnerToSubmitView from "../view/WaitingPartnerToSubmitView"
 
 type Props = {
     currentRoomId: string
@@ -18,6 +19,9 @@ function WaitingPartnerToSubmitFallbackAndResultView({ currentRoomId }: Props) {
             </div>
         )
     } else if (!!partnerInfo?.formValues === false) {
+        return (
+            <WaitingPartnerToSubmitView/>
+        )
         return <div>Waiting for your partner to submit their form...</div>
     }
     return <CompabilityResult />

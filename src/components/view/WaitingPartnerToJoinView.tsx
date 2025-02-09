@@ -54,9 +54,6 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
             <p className="text-muted-foreground">
                 Waiting for your special someone...
             </p>
-            {/* <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl bounce">
-                Love is patient..
-            </h1> */}
             <div className="mt-2 w-full">
                 <section className="flex h-[420px] items-center justify-center pb-3">
                     {errorMessage ? (
