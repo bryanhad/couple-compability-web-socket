@@ -57,7 +57,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                 Love is patient..
             </h1> */}
             <div className="mt-2 w-full">
-                <section className="flex h-[440px] items-center justify-center pb-3">
+                <section className="flex h-[420px] items-center justify-center pb-3">
                     {errorMessage ? (
                         <div className="flex flex-col items-center justify-center gap-4">
                             <Frown size={120} className="shrink-0" />

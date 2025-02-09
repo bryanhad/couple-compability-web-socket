@@ -38,7 +38,7 @@ export default function RootLayout({
                         height={50}
                     />
                 </div>
-                <main className="flex flex-[1] flex-col items-center justify-center pb-6 px-4">
+                <main className="flex flex-[1] flex-col items-center justify-center px-4">
                     <ContextProviders>{children}</ContextProviders>
                 </main>
                 <Toaster />
