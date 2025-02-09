@@ -9,13 +9,8 @@ export default function Home() {
                 <span className="text-start text-xl">Are You a</span>
                 <span className="text-nowrap">Perfect Match</span>
                 <div className="relative self-center">
-                    <Image
-                        alt="heart-icon"
-                        src="/heart.png"
-                        width={50}
-                        height={50}
-                    />
-                    <span className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 pb-1 text-xl text-white">
+                    <div id="heart" />
+                    <span className="absolute right-1/2 top-[56%] -translate-y-1/2 translate-x-1/2 pb-1 text-xl text-white">
                         or
                     </span>
                 </div>

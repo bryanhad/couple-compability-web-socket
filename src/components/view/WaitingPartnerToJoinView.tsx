@@ -44,7 +44,9 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
 
     return (
         <div>
-            Waiting for your partner to join the room...
+            <h1 className="text-4xl font-bold leading-none text-primary md:text-6xl">
+                Love is patient..
+            </h1>
             <div className="w-full">
                 <section className="flex h-[350px] items-center justify-center pb-3">
                     {errorMessage ? (
