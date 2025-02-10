@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import Image from "next/image"
 import GoBackToHomeButton from "@/components/buttons/GoBackToHomeButton"
 import FloatingIcons from "@/components/view/FloatingIcons"
+import { Heart } from "lucide-react"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -62,7 +63,7 @@ export default function RootLayout({
                         </div>
                     </footer>
                 </div>
-                <FloatingIcons icon={<div id="heart" />} count={10} />
+                <FloatingIcons icon={<Heart className="text-primary/30 shrink-0" size={40}/>} count={10} />
             </body>
         </html>
     )
