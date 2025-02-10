@@ -28,11 +28,6 @@ function CompabilityForm({ currentRoomId }: Props) {
     const { userInfo, partnerInfo } = usePusherClientContext()
     const form = useForm<CompabilityFormFields>({
         resolver: zodResolver(compabilityFormSchema),
-        defaultValues: {
-            favBoardGame: undefined,
-            favColor: undefined,
-            favFood: undefined,
-        },
     })
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
@@ -74,7 +69,7 @@ function CompabilityForm({ currentRoomId }: Props) {
     }
 
     return (
-        <div className="w-full rounded-md border bg-white px-6 py-6">
+        <div className="w-full rounded-md border bg-white px-3 py-6">
             <div className="mb-5 text-center">
                 <h1 className="mb-3 text-2xl font-bold leading-none text-primary md:text-3xl">
                     Time to Roll the Dice of Love!
@@ -92,7 +87,7 @@ function CompabilityForm({ currentRoomId }: Props) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-3"
+                    className="space-y-8"
                 >
                     {Object.values(FORM_QUESTIONS).map((el) => (
                         <FormField
@@ -100,9 +95,16 @@ function CompabilityForm({ currentRoomId }: Props) {
                             control={form.control}
                             name={el.fieldName}
                             render={({ field }) => (
-                                <FormItem className="flex flex-col items-start">
+                                <FormItem className="flex flex-col items-start rounded-md bg-pink-100/50 p-3">
                                     <FormLabel className="font-semibold">
-                                        {el.label}
+                                        <div className="flex items-start gap-2">
+                                            <div className="text-lg">
+                                                {el.emoji}
+                                            </div>
+                                            <span className="leading-5">
+                                                {el.label}
+                                            </span>
+                                        </div>
                                     </FormLabel>
                                     <FormMessage />
                                     <FormControl>
@@ -114,7 +116,7 @@ function CompabilityForm({ currentRoomId }: Props) {
                                             {el.options.map((opt) => (
                                                 <FormItem
                                                     key={opt.value}
-                                                    className="flex items-center space-x-1 space-y-0"
+                                                    className="flex items-center space-x-1 space-y-0 pl-1"
                                                 >
                                                     <FormControl>
                                                         <RadioGroupItem

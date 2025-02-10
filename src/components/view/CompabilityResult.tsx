@@ -4,7 +4,7 @@ import { usePusherClientContext } from "@/context/pusher-client-context"
 import CountUp from "../animated-text/CountUp"
 import { FORM_QUESTIONS } from "../forms/compability-form/form-data"
 import { cn } from "@/utils/shadcn"
-import { Heart, Check, X } from "lucide-react"
+import { Check, X } from "lucide-react"
 import { useEffect } from "react"
 
 // Helper function to calculate match percentage
@@ -42,7 +42,12 @@ function CompabilityResult() {
     const { userInfo, partnerInfo } = usePusherClientContext()
 
     // Ensure both userInfo and partnerInfo are present and have formValues
-    if (!userInfo?.formValues || !partnerInfo?.formValues) {
+    if (
+        !userInfo ||
+        !!userInfo.formValues === false ||
+        !partnerInfo ||
+        !!partnerInfo.formValues === false
+    ) {
         return <div>Loading compatibility results...</div>
     }
 
@@ -54,14 +59,15 @@ function CompabilityResult() {
     return (
         <div className="rounded-md border bg-white px-4 pb-4 pt-8">
             <div className="mb-4 flex flex-col items-center text-center">
-                <h1 className="mb-4 text-3xl font-bold leading-none text-primary md:text-3xl">
+                <h1 className="mb-4 text-3xl font-bold leading-10 text-primary md:text-3xl">
                     Compability Results
                     <br />
                     Are In!
                 </h1>
 
                 <p className="text-muted-foreground">
-                    Your compability with<br/>
+                    Your compability with
+                    <br />
                     <span className="font-semibold text-primary">
                         {partnerInfo.displayName}
                     </span>{" "}
@@ -99,23 +105,32 @@ function CompabilityResult() {
                 <li className="flex flex-col gap-4">
                     {Object.values(FORM_QUESTIONS)
                         .map((formField) => ({
+                            emoji: formField.emoji,
                             question: formField.label,
                             user: {
                                 name: "Mine",
                                 answer:
                                     userInfo && userInfo.formValues
-                                        ? userInfo.formValues[
-                                              formField.fieldName
-                                          ]
+                                        ? formField.options.find(
+                                              (o) =>
+                                                  o.value ===
+                                                  userInfo.formValues?.[
+                                                      formField.fieldName
+                                                  ],
+                                          )?.label
                                         : null,
                             },
                             partner: {
                                 name: partnerInfo.displayName + `'s`,
                                 answer:
                                     partnerInfo && partnerInfo.formValues
-                                        ? partnerInfo.formValues[
-                                              formField.fieldName
-                                          ]
+                                        ? formField.options.find(
+                                              (o) =>
+                                                  o.value ===
+                                                  partnerInfo.formValues?.[
+                                                      formField.fieldName
+                                                  ],
+                                          )?.label
                                         : null,
                             },
                         }))
@@ -133,10 +148,15 @@ function CompabilityResult() {
                                     )}
                                     key={i}
                                 >
-                                    <div className="flex items-start justify-between gap-3">
-                                        <p className="mb-2 font-medium text-gray-600">
-                                            {formField.question}
-                                        </p>
+                                    <div className="mb-2 flex items-start justify-between gap-3">
+                                        <div className="mb-2 flex items-start gap-2">
+                                            <div className="text-lg">
+                                                {formField.emoji}
+                                            </div>
+                                            <span className="font-medium leading-5 text-gray-600">
+                                                {formField.question}
+                                            </span>
+                                        </div>
                                         {isMatch ? (
                                             <Check
                                                 className="shrink-0 text-green-500"
@@ -149,37 +169,23 @@ function CompabilityResult() {
                                             />
                                         )}
                                     </div>
-                                    <div className="flex">
+                                    <div className="flex gap-4">
                                         {[
                                             formField.user,
                                             formField.partner,
                                         ].map((el, i) => (
                                             <div
                                                 key={i}
-                                                className="flex flex-[1]"
+                                                className="flex flex-[1] gap-4"
                                             >
-                                                <div className="flex flex-col">
-                                                    <div className="flex flex-[1] items-center">
-                                                        <Heart
-                                                            className={cn(
-                                                                "mr-2 shrink-0 text-blue-400",
-                                                                {
-                                                                    "text-red-400":
-                                                                        el.name !==
-                                                                        "Mine",
-                                                                },
-                                                            )}
-                                                            size={14}
-                                                        />
-                                                    </div>
-                                                    <div className="flex-[1]"></div>
-                                                </div>
                                                 <div>
                                                     <p
                                                         className={cn(
-                                                            "font-semibold",
+                                                            "font-semibold text-blue-400",
                                                             {
-                                                                "": !isMatch,
+                                                                "text-red-400":
+                                                                    el.name !==
+                                                                    "Mine",
                                                             },
                                                         )}
                                                     >
@@ -188,7 +194,9 @@ function CompabilityResult() {
                                                         </span>
                                                     </p>
 
-                                                    <p>{el.answer}</p>
+                                                    <p className="text-sm">
+                                                        {el.answer}
+                                                    </p>
                                                 </div>
                                             </div>
                                         ))}
