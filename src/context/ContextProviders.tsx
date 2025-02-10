@@ -1,7 +1,7 @@
 "use client"
 
 import { PropsWithChildren, useState } from "react"
-import { PusherClientContext, UserInfo } from "./pusher-client-context"
+import { ClientContext, UserInfo } from "./pusher-client-context"
 import Pusher from "pusher-js"
 
 function ContextProviders({ children }: PropsWithChildren) {
@@ -9,9 +9,10 @@ function ContextProviders({ children }: PropsWithChildren) {
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
     const [partnerInfo, setPartnerInfo] = useState<UserInfo | null>(null)
     const [channelMemberCount, setChannelMemberCount] = useState<number>(1)
+    const [selectedQuestionKeys, setSelectedQuestionKeys] = useState<string[]>([])
 
     return (
-        <PusherClientContext.Provider
+        <ClientContext.Provider
             value={{
                 pusherClient,
                 setPusherClient,
@@ -21,10 +22,12 @@ function ContextProviders({ children }: PropsWithChildren) {
                 setPartnerInfo,
                 channelMemberCount,
                 setChannelMemberCount,
+                selectedQuestionKeys,
+                setSelectedQuestionKeys,
             }}
         >
             {children}
-        </PusherClientContext.Provider>
+        </ClientContext.Provider>
     )
 }
 

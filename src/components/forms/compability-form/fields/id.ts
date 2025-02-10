@@ -1,4 +1,6 @@
-export const ID_FORM_QUESTIONS = {
+import { FormQuestion } from "../type"
+
+export const ID_FORM_QUESTIONS: Record<string, FormQuestion> = {
     favDateActivity: {
         fieldName: "favDateActivity",
         emoji: "💑",

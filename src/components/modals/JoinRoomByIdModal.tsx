@@ -8,17 +8,11 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import LoadingButton from "../buttons/LoadingButton"
 import { createPusherClient } from "@/lib/pusher/client"
 import { useToast } from "@/hooks/use-toast"
-import { usePusherClientContext } from "@/context/pusher-client-context"
+import { useClientContext } from "@/context/pusher-client-context"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
@@ -30,7 +24,7 @@ const formSchema = z.object({
 })
 
 function JoinRoomByIdModal() {
-    const { setPusherClient, setUserInfo } = usePusherClientContext()
+    const { setPusherClient, setUserInfo } = useClientContext()
     const { toast } = useToast()
     const router = useRouter()
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -43,19 +37,14 @@ function JoinRoomByIdModal() {
             roomId: "",
         },
     })
-    async function onSubmit({
-        displayName,
-        roomId,
-    }: z.infer<typeof formSchema>) {
+    async function onSubmit({ displayName, roomId }: z.infer<typeof formSchema>) {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName)
+            const newPusherClient = await createPusherClient(displayName)
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
-            const lowerCasedRoomId = roomId.replace(/[A-Z]/g, (match) =>
-                match.toLowerCase(),
-            )
+            const lowerCasedRoomId = roomId.replace(/[A-Z]/g, (match) => match.toLowerCase())
             router.push(`/room/${lowerCasedRoomId}`)
         } catch (err) {
             if (err instanceof Error) {
@@ -91,9 +80,7 @@ function JoinRoomByIdModal() {
                 >
                     <div className="flex flex-col gap-1">
                         <p className="text-nowrap text-lg">Join Room</p>
-                        <p className="text-wrap text-primary-foreground/70">
-                            Take your turn!
-                        </p>
+                        <p className="text-wrap text-primary-foreground/70">Take your turn!</p>
                     </div>
                 </Button>
             }
@@ -103,28 +90,20 @@ function JoinRoomByIdModal() {
                     Please enter your <span className="text-primary">name</span>
                     , and
                     <br />
-                    the <span className="text-primary">room ID</span> from your
-                    partner.
+                    the <span className="text-primary">room ID</span> from your partner.
                 </p>
             }
         >
             <div className="flex w-full flex-col gap-2">
                 <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-2"
-                    >
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                         <FormField
                             control={form.control}
                             name="displayName"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input
-                                            placeholder="Please enter your name"
-                                            type="text"
-                                            {...field}
-                                        />
+                                        <Input placeholder="Please enter your name" type="text" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -136,22 +115,14 @@ function JoinRoomByIdModal() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input
-                                            placeholder="123456"
-                                            type="text"
-                                            {...field}
-                                        />
+                                        <Input placeholder="123456" type="text" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <div className="pt-4">
-                            <LoadingButton
-                                loading={isLoading}
-                                type="submit"
-                                className="w-full"
-                            >
+                            <LoadingButton loading={isLoading} type="submit" className="w-full">
                                 Join Room
                             </LoadingButton>
                         </div>

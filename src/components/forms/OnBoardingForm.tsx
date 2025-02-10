@@ -1,15 +1,9 @@
 "use client"
 
 import LoadingButton from "@/components/buttons/LoadingButton"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { usePusherClientContext } from "@/context/pusher-client-context"
+import { useClientContext } from "@/context/pusher-client-context"
 import { useToast } from "@/hooks/use-toast"
 import { createPusherClient } from "@/lib/pusher/client"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -33,7 +27,7 @@ function OnBoardingForm({ roomId }: Props) {
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    const { setPusherClient, setUserInfo } = usePusherClientContext()
+    const { setPusherClient, setUserInfo } = useClientContext()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -46,7 +40,7 @@ function OnBoardingForm({ roomId }: Props) {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName)
+            const newPusherClient = await createPusherClient(displayName)
             setUserInfo({ displayName, role: "joiner" })
             setPusherClient(newPusherClient)
             router.push(`/room/${roomId}`)
@@ -66,34 +60,22 @@ function OnBoardingForm({ roomId }: Props) {
 
     return (
         <div className="w-full max-w-[400px] rounded-md bg-white p-6 shadow-md">
-            <h2 className="mb-3 text-muted-foreground">
-                What&apos;s your name, love?
-            </h2>
+            <h2 className="mb-3 text-muted-foreground">What&apos;s your name, love?</h2>
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
-                >
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
                         control={form.control}
                         name="displayName"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input
-                                        placeholder="Enter your name"
-                                        {...field}
-                                    />
+                                    <Input placeholder="Enter your name" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <LoadingButton
-                        loading={isLoading}
-                        type="submit"
-                        className="rounded-full px-6"
-                    >
+                    <LoadingButton loading={isLoading} type="submit" className="rounded-full px-6">
                         Join Room
                     </LoadingButton>
                 </form>

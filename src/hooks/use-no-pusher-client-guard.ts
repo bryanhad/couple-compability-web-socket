@@ -1,11 +1,11 @@
 "use client"
 
-import { usePusherClientContext } from "@/context/pusher-client-context"
+import { useClientContext } from "@/context/pusher-client-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export function useNoPusherClientGuard() {
-    const { pusherClient } = usePusherClientContext()
+    const { pusherClient } = useClientContext()
     const router = useRouter()
 
     useEffect(() => {

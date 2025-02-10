@@ -8,6 +8,7 @@ const CREATOR_HAS_BEEN_WAITING_EVENT: WSEvents = "creator-has-been-waiting"
 export type CreatorHasBeenWaiting_EventPayload = {
     creatorName: string
     selectedLanguage: FormLanguage
+    selectedQuestionKeys: string[]
 }
 
 export async function triggerCreatorHasBeenWaitingEvent(

@@ -196,72 +196,74 @@ body {
         }
     }
 
-    #pulsingheartbig { 
-      position: relative; 
-      width: 260px; 
-      height: 140px;
-      
-    } 
-    
-    #pulsingheartbig:before, #pulsingheartbig:after { 
-      position: absolute; 
-      content: ""; 
-      left: 130px; 
-      top: 0; 
-      width: 130px; 
-      height: 180px; 
-      background: hsl(0, 100%, 98%); 
-      border-radius: 120px 120px 0 0; 
-      transform: rotate(-49deg);  
-      transform-origin: 0 100%;
-      /* animation:pulsecolor 1s infinite; */
-    } 
-    
-    #pulsingheartbig:after { 
-      left: 0; 
-      transform: rotate(49deg); 
-      transform-origin :100% 100%;
-      /* animation:pulsecolor 1s infinite; */
+    #pulsingheartbig {
+        position: relative;
+        width: 260px;
+        height: 140px;
     }
 
-    #pulsingheart { 
-      position: relative; 
-      width: 48px; 
-      height: 40px;
-      
-    } 
-    
-    #pulsingheart:before, #pulsingheart:after { 
-      position: absolute; 
-      content: ""; 
-      left: 25px; 
-      top: 0; 
-      width: 25px; 
-      height: 40px; 
-      background: hsl(0, 68%, 52%); 
-      border-radius: 20px 20px 0 0; 
-      transform: rotate(-45deg);  
-      transform-origin: 0 100%;
-      animation:pulsecolor 1s infinite;
-    } 
-    
-    #pulsingheart:after { 
-      left: 0; 
-      transform: rotate(45deg); 
-      transform-origin :100% 100%;
-      animation:pulsecolor 1s infinite;
+    #pulsingheartbig:before,
+    #pulsingheartbig:after {
+        position: absolute;
+        content: "";
+        left: 130px;
+        top: 0;
+        width: 130px;
+        height: 180px;
+        background: hwb(0 36% 0%);
+        border-radius: 120px 120px 0 0;
+        transform: rotate(-49deg);
+        transform-origin: 0 100%;
+        /* animation:pulsecolor 1s infinite; */
     }
-    
+
+    #pulsingheartbig:after {
+        left: 0;
+        transform: rotate(49deg);
+        transform-origin: 100% 100%;
+        /* animation:pulsecolor 1s infinite; */
+    }
+
+    #pulsingheart {
+        position: relative;
+        width: 48px;
+        height: 40px;
+    }
+
+    #pulsingheart:before,
+    #pulsingheart:after {
+        position: absolute;
+        content: "";
+        left: 25px;
+        top: 0;
+        width: 25px;
+        height: 40px;
+        background: hsl(0, 68%, 52%);
+        border-radius: 20px 20px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        animation: pulsecolor 1s infinite;
+    }
+
+    #pulsingheart:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+        animation: pulsecolor 1s infinite;
+    }
+
     @keyframes pulsingheart {
-      10% {transform: scale(1.1)}
-    }
-    
-    @keyframes pulsecolor {
-      40% {background: hsl(0 84% 60%)}
+        10% {
+            transform: scale(1.1);
+        }
     }
 
- 
-    
+    @keyframes pulsecolor {
+        40% {
+            background: hsl(0 84% 60%);
+        }
+    }
+
     .floating-icon {
         position: absolute;
         animation: floatUp linear infinite;

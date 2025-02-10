@@ -1,5 +1,4 @@
-import WaitingPartnerJoinFallback from "@/components/fallbacks/WaitingPartnerToJoinFallback"
-import WaitingPartnerToSubmitFallbackAndResultView from "@/components/fallbacks/WaitingPartnerToSubmitFallbackAndResultView"
+import Room from "@/components/view/Room"
 
 type Props = {
     params: Promise<{ id: string }>
@@ -8,11 +7,7 @@ type Props = {
 async function RoomIdPage({ params }: Props) {
     const id = (await params).id
 
-    return (
-        <WaitingPartnerJoinFallback currentRoomId={id}>
-            <WaitingPartnerToSubmitFallbackAndResultView currentRoomId={id} />
-        </WaitingPartnerJoinFallback>
-    )
+    return <Room currentRoomId={id} />
 }
 
 export default RoomIdPage

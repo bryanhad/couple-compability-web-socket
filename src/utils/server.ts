@@ -1,10 +1,12 @@
+"use server"
+
 import crypto from "crypto"
 
 /**
- * Returns a random string of 32 characters
- * - 3 bytes × 2 characters per byte = 6 characters
+ * Returns a random string
+ * - `(length / 2)` bytes × 2 characters per byte = `length` characters
  */
-export function generateRandomId(length = 6) {
+export async function generateRandomId(length = 6): Promise<string> {
     if (length < 2) {
         throw new Error("invalid length input for generateRandomId")
     }

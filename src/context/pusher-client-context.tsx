@@ -22,7 +22,7 @@ type JoinerInfo = UserInfoBase & {
 
 export type UserInfo = CreatorInfo | JoinerInfo
 
-type PusherClientContext = {
+type ClientContext = {
     pusherClient: Pusher | null
     setPusherClient: Dispatch<SetStateAction<Pusher | null>>
     userInfo: UserInfo | null
@@ -31,18 +31,16 @@ type PusherClientContext = {
     setPartnerInfo: Dispatch<SetStateAction<UserInfo | null>>
     channelMemberCount: number
     setChannelMemberCount: Dispatch<SetStateAction<number>>
+    selectedQuestionKeys: string[]
+    setSelectedQuestionKeys: Dispatch<SetStateAction<string[]>>
 }
 
-export const PusherClientContext = createContext<PusherClientContext | null>(
-    null,
-)
+export const ClientContext = createContext<ClientContext | null>(null)
 
-export function usePusherClientContext() {
-    const pusherClientContext = useContext(PusherClientContext)
-    if (pusherClientContext === null) {
-        throw new Error(
-            "usePusherClientContext must be used within a PusherClientContext Provider",
-        )
+export function useClientContext() {
+    const clientContext = useContext(ClientContext)
+    if (clientContext === null) {
+        throw new Error("useClientContext must be used within a ClientContext Provider")
     }
-    return pusherClientContext
+    return clientContext
 }
