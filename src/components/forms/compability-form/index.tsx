@@ -69,7 +69,7 @@ function CompabilityForm({ currentRoomId }: Props) {
     }
 
     return (
-        <div className="w-full rounded-md border bg-white px-3 py-6">
+        <div className="w-full rounded-md border bg-white/60 px-3 py-6">
             <div className="mb-5 text-center">
                 <h1 className="mb-3 text-2xl font-bold leading-none text-primary md:text-3xl">
                     Time to Roll the Dice of Love!
