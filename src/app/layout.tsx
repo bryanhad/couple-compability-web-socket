@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import Image from "next/image"
+import GoBackToHomeButton from "@/components/buttons/GoBackToHomeButton"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,15 +29,16 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/80 antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/70 antialiased`}
             >
-                <header className="flex justify-end py-4 pr-4">
+                <header className="flex items-center justify-between p-4 w-auto h-auto">
                     <Image
                         alt="mamasays-logo"
                         src="/mamasays-logo.png"
                         width={150}
                         height={25}
                     />
+                    <GoBackToHomeButton/>
                 </header>
                 <main className="flex flex-[1] flex-col items-center justify-center px-4">
                     <ContextProviders>{children}</ContextProviders>

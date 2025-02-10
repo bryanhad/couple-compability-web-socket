@@ -22,7 +22,6 @@ function WaitingPartnerToSubmitFallbackAndResultView({ currentRoomId }: Props) {
         return (
             <WaitingPartnerToSubmitView/>
         )
-        return <div>Waiting for your partner to submit their form...</div>
     }
     return <CompabilityResult />
 }

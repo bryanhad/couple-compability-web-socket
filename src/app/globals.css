@@ -166,7 +166,7 @@ body {
     }
 
     .bounce {
-        animation: bounce 2s ease infinite;
+        animation: bounce 10s ease infinite;
     }
     @keyframes bounce {
         0%,
@@ -177,7 +177,7 @@ body {
             transform: translateY(0);
         }
         40% {
-            transform: translateY(-12px);
+            transform: translateY(-8px);
         }
         60% {
             transform: translateY(-2px);
@@ -194,6 +194,34 @@ body {
         to {
             transform: scale(1);
         }
+    }
+
+    #pulsingheartbig { 
+      position: relative; 
+      width: 260px; 
+      height: 140px;
+      
+    } 
+    
+    #pulsingheartbig:before, #pulsingheartbig:after { 
+      position: absolute; 
+      content: ""; 
+      left: 130px; 
+      top: 0; 
+      width: 130px; 
+      height: 180px; 
+      background: hsl(0, 100%, 98%); 
+      border-radius: 120px 120px 0 0; 
+      transform: rotate(-49deg);  
+      transform-origin: 0 100%;
+      /* animation:pulsecolor 1s infinite; */
+    } 
+    
+    #pulsingheartbig:after { 
+      left: 0; 
+      transform: rotate(49deg); 
+      transform-origin :100% 100%;
+      /* animation:pulsecolor 1s infinite; */
     }
 
     #pulsingheart { 

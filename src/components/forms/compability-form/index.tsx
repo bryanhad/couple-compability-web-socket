@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form"
 import LoadingButton from "@/components/buttons/LoadingButton"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { CompabilityFormFields, compabilityFormSchema } from "./schema"
-import { favBoardGames, favColors, favFoods } from "./form-data"
+import { FORM_QUESTIONS } from "./form-data"
 import { usePusherClientContext } from "@/context/pusher-client-context"
 import { triggerCreatorSubmittedFormEvent } from "@/server-actions/trigger-creator-submitted-form-event"
 
@@ -85,8 +85,8 @@ function CompabilityForm({ currentRoomId }: Props) {
                         {partnerInfo
                             ? partnerInfo.displayName
                             : "your special someone"}
-                    </span>..
-                    👀
+                    </span>
+                    .. 👀
                 </p>
             </div>
             <Form {...form}>
@@ -94,111 +94,44 @@ function CompabilityForm({ currentRoomId }: Props) {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-3"
                 >
-                    <FormField
-                        control={form.control}
-                        name="favColor"
-                        render={({ field }) => (
-                            <FormItem className="flex flex-col items-start">
-                                <FormLabel className="font-semibold">
-                                    What&apos;s your favorite color?
-                                </FormLabel>
-                                <FormMessage />
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className="flex flex-col gap-1"
-                                    >
-                                        {favColors.map((c) => (
-                                            <FormItem
-                                                key={c.value}
-                                                className="flex items-center space-x-1 space-y-0"
-                                            >
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value={c.value}
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="p-2 font-normal">
-                                                    {c.label}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="favFood"
-                        render={({ field }) => (
-                            <FormItem className="flex flex-col items-start">
-                                <FormLabel className="font-semibold">
-                                    What&apos;s your favorite food?
-                                </FormLabel>
-                                <FormMessage />
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className="flex flex-col gap-1"
-                                    >
-                                        {favFoods.map((c) => (
-                                            <FormItem
-                                                key={c.value}
-                                                className="flex items-center space-x-1 space-y-0"
-                                            >
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value={c.value}
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="p-2 font-normal">
-                                                    {c.label}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="favBoardGame"
-                        render={({ field }) => (
-                            <FormItem className="flex flex-col items-start">
-                                <FormLabel className="font-semibold">
-                                    What&apos;s your favorite board game?
-                                </FormLabel>
-                                <FormMessage />
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className="flex flex-col gap-1"
-                                    >
-                                        {favBoardGames.map((c) => (
-                                            <FormItem
-                                                key={c.value}
-                                                className="flex items-center space-x-1 space-y-0"
-                                            >
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value={c.value}
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="p-2 font-normal">
-                                                    {c.label}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
+                    {Object.values(FORM_QUESTIONS).map((el) => (
+                        <FormField
+                            key={el.fieldName}
+                            control={form.control}
+                            name={el.fieldName}
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-start">
+                                    <FormLabel className="font-semibold">
+                                        {el.label}
+                                    </FormLabel>
+                                    <FormMessage />
+                                    <FormControl>
+                                        <RadioGroup
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            className="flex flex-col gap-1"
+                                        >
+                                            {el.options.map((opt) => (
+                                                <FormItem
+                                                    key={opt.value}
+                                                    className="flex items-center space-x-1 space-y-0"
+                                                >
+                                                    <FormControl>
+                                                        <RadioGroupItem
+                                                            value={opt.value}
+                                                        />
+                                                    </FormControl>
+                                                    <FormLabel className="p-2 font-normal">
+                                                        {opt.label}
+                                                    </FormLabel>
+                                                </FormItem>
+                                            ))}
+                                        </RadioGroup>
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                    ))}
                     <LoadingButton
                         loading={isLoading}
                         type="submit"
