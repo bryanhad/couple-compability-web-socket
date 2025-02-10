@@ -80,7 +80,7 @@ function CompabilityForm({ currentRoomId }: Props) {
                     Time to Roll the Dice of Love!
                 </h1>
                 <p className="text-muted-foreground">
-                    Let's see if you're on the same board as{" "}
+                    Let&apos;s see if you&apos;re on the same board as{" "}
                     <span className="font-semibold text-primary">
                         {partnerInfo
                             ? partnerInfo.displayName

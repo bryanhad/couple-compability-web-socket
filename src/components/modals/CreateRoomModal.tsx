@@ -6,7 +6,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -46,7 +45,7 @@ function CreateRoomModal() {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(displayName, toast, 'creator')
+            const newPusherClient = createPusherClient(displayName)
             setUserInfo({ displayName, role: "creator" })
             setPusherClient(newPusherClient)
             const id = generateRandomId()
@@ -81,11 +80,11 @@ function CreateRoomModal() {
                     onClick={() => {
                         setIsModalOpen((prev) => !prev)
                     }}
-                    className="flex h-28 flex-[1] flex-col py-4 justify-center text-center rounded-md"
+                    className="flex h-28 flex-[1] flex-col justify-center rounded-md py-4 text-center"
                 >
                     <div className="flex flex-col gap-1">
                         <p className="text-nowrap text-lg">Create Room</p>
-                        <p className=" text-wrap text-primary-foreground/70">
+                        <p className="text-wrap text-primary-foreground/70">
                             Make the first move!
                         </p>
                     </div>

@@ -1,12 +1,11 @@
-import { useToast } from "@/hooks/use-toast"
 import envClient from "@/utils/env-client"
 import { generateRandomId } from "@/utils/server"
 import PusherClient from "pusher-js"
 
 export function createPusherClient(
     displayName: string,
-    toast: ReturnType<typeof useToast>["toast"],
-    role: "creator" | "joiner",
+    // toast: ReturnType<typeof useToast>["toast"],
+    // role: "creator" | "joiner",
 ) {
     const newUserId = generateRandomId(32)
     const newPusherClient = new PusherClient(envClient.PUSHER_APP_KEY, {

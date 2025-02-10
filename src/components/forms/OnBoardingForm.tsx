@@ -6,7 +6,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -47,11 +46,7 @@ function OnBoardingForm({ roomId }: Props) {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(
-                displayName,
-                toast,
-                "joiner",
-            )
+            const newPusherClient = createPusherClient(displayName)
             setUserInfo({ displayName, role: "joiner" })
             setPusherClient(newPusherClient)
             router.push(`/room/${roomId}`)
@@ -70,8 +65,10 @@ function OnBoardingForm({ roomId }: Props) {
     }
 
     return (
-        <div className="p-6 rounded-md shadow-md bg-white w-full max-w-[400px]">
-            <h2 className="text-muted-foreground mb-3">What's your name, love?</h2>
+        <div className="w-full max-w-[400px] rounded-md bg-white p-6 shadow-md">
+            <h2 className="mb-3 text-muted-foreground">
+                What&apos;s your name, love?
+            </h2>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -83,13 +80,20 @@ function OnBoardingForm({ roomId }: Props) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Enter your name" {...field} />
+                                    <Input
+                                        placeholder="Enter your name"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <LoadingButton loading={isLoading} type="submit" className="rounded-full px-6">
+                    <LoadingButton
+                        loading={isLoading}
+                        type="submit"
+                        className="rounded-full px-6"
+                    >
                         Join Room
                     </LoadingButton>
                 </form>

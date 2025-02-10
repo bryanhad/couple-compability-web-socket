@@ -13,7 +13,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import LoadingButton from "../buttons/LoadingButton"
@@ -51,11 +50,7 @@ function JoinRoomByIdModal() {
         setErrorMessage(null)
         setIsLoading(true)
         try {
-            const newPusherClient = createPusherClient(
-                displayName,
-                toast,
-                "joiner",
-            )
+            const newPusherClient = createPusherClient(displayName)
             setPusherClient(newPusherClient)
             setUserInfo({ displayName, role: "joiner" })
             const lowerCasedRoomId = roomId.replace(/[A-Z]/g, (match) =>
