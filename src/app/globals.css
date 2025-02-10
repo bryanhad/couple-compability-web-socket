@@ -89,7 +89,7 @@ body {
     }
 
     #heart::before {
-        left: 29;
+        left: 55;
         transform: rotate(-52deg);
         transform-origin: 0 100%;
     }
