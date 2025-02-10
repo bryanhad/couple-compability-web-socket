@@ -1,8 +1,4 @@
 import { z } from "zod"
-// import { FORM_QUESTIONS } from "./form-data"
-
-// const getValues = <T extends readonly { value: string }[]>(arr: T) =>
-//     arr.map((item) => item.value)
 
 export const compabilityFormSchema = z.object({
     favDateActivity: z.string({

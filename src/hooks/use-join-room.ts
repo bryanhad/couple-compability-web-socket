@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { usePusherClientContext } from "@/context/pusher-client-context"
 import { useToast } from "@/hooks/use-toast"
@@ -21,10 +21,9 @@ export function useJoinRoom(currentRoomId: string) {
             }
             setIsJoiningRoom(true)
             try {
-                await triggerJoinerJoinedRoomEvent(
-                    currentRoomId,
-                    userInfo.displayName,
-                )
+                await triggerJoinerJoinedRoomEvent(currentRoomId, {
+                    joinerName: userInfo.displayName,
+                })
             } catch (err) {
                 const errMessage =
                     err instanceof Error ? err.message : "Something went wrong!"

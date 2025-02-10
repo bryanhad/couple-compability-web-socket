@@ -66,8 +66,8 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                     ) : (
                         <>
                             {!isLoading && qrCodeURI ? (
-                                <div className="flex flex-col items-center justify-center rounded-md bg-white py-5 shadow-md mx-4">
-                                    <p className="w-[70%] text-center text-sm text-foreground/60 mb-2">
+                                <div className="mx-4 flex flex-col items-center justify-center rounded-md bg-white py-5 shadow-md">
+                                    <p className="mb-2 w-[70%] text-center text-sm text-foreground/60">
                                         Share this QR code with your partner to
                                         start the game!
                                     </p>

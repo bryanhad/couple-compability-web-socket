@@ -5,5 +5,11 @@ export const wsEvents = [
     "joiner-submitted-form",
 ] as const
 
-export type WSEvents = (typeof wsEvents)[number]
+export const formLanguage = [
+    { short: "EN", long: "English" },
+    { short: "ID", long: "Indonesian" },
+] as const
 
+export type FormLanguage = (typeof formLanguage)[number]["short"]
+
+export type WSEvents = (typeof wsEvents)[number]

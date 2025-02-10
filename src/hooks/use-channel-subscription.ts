@@ -1,13 +1,18 @@
 "use client"
 
-import { CompabilityFormFields } from "@/components/forms/compability-form/schema"
 import { usePusherClientContext } from "@/context/pusher-client-context"
-import { triggerCreatorHasBeenWaitingEvent } from "@/server-actions/trigger-creator-has-been-waiting-event"
+import {
+    CreatorHasBeenWaiting_EventPayload,
+    triggerCreatorHasBeenWaitingEvent,
+} from "@/server-actions/trigger-creator-has-been-waiting-event"
 import { WSEvents } from "@/utils/constants"
 import { useEffect, useState } from "react"
 import { useToast } from "./use-toast"
 import { PresenceChannel } from "pusher-js"
 import { useRouter } from "next/navigation"
+import { CreatorSubmittedForm_EventPayload } from "@/server-actions/trigger-creator-submitted-form-event"
+import { JoinerSubmittedForm_EventPayload } from "@/server-actions/trigger-joiner-submitted-form-event"
+import { JoinerJoinedRoom_EventPayload } from "@/server-actions/trigger-joiner-joined-room-event"
 
 const JOINER_JOINED_ROOM_EVENT: WSEvents = "joiner-joined-room"
 const CREATOR_HAS_BEEN_WAITING_EVENT: WSEvents = "creator-has-been-waiting"
@@ -19,6 +24,7 @@ export function useChannelSubscription(currentRoomId: string) {
     const {
         pusherClient,
         userInfo,
+        partnerInfo,
         setPartnerInfo,
         setUserInfo,
         setChannelMemberCount,
@@ -37,52 +43,63 @@ export function useChannelSubscription(currentRoomId: string) {
             `presence-${currentRoomId}`,
         ) as PresenceChannel
 
-        channel.bind(JOINER_JOINED_ROOM_EVENT, (partnerName: string) => {
-            setChannelMemberCount(presenceChannel.members.count)
-
-            // creator block
-            if (userInfo?.role === "creator") {
-                toast({
-                    variant: "default",
-                    title: "Hooray!",
-                    description: `${partnerName} has joined your room!`,
-                })
-                setPartnerInfo({ displayName: partnerName, role: "joiner" })
-                triggerCreatorHasBeenWaitingEvent(
-                    currentRoomId,
-                    userInfo.displayName,
-                )
-                // joiner block
-            } else {
-                if (presenceChannel.members.count < 2) {
-                    toast({
-                        variant: "destructive",
-                        title: "Room not found!",
-                        description: `Are you sure the room ID is correct?`,
-                    })
-                    router.push("/room")
-                } else {
+        channel.bind(
+            JOINER_JOINED_ROOM_EVENT,
+            ({ joinerName }: JoinerJoinedRoom_EventPayload) => {
+                setChannelMemberCount(presenceChannel.members.count)
+                // creator block
+                if (userInfo?.role === "creator") {
                     toast({
                         variant: "default",
                         title: "Hooray!",
-                        description: "Successfully connected to room",
+                        description: `${joinerName} has joined your room!`,
+                    })
+                    setPartnerInfo({ displayName: joinerName, role: "joiner" })
+                    triggerCreatorHasBeenWaitingEvent(currentRoomId, {
+                        creatorName: userInfo.displayName,
+                        selectedLanguage: userInfo.selectedLanguage,
+                    })
+                    // joiner block
+                } else {
+                    if (presenceChannel.members.count < 2) {
+                        toast({
+                            variant: "destructive",
+                            title: "Room not found!",
+                            description: `Are you sure the room ID is correct?`,
+                        })
+                        router.push("/room")
+                    } else {
+                        toast({
+                            variant: "default",
+                            title: "Hooray!",
+                            description: "Successfully connected to room",
+                        })
+                    }
+                }
+                setIsWaitingPartner(false)
+            },
+        )
+        channel.bind(
+            CREATOR_HAS_BEEN_WAITING_EVENT,
+            ({
+                creatorName,
+                selectedLanguage,
+            }: CreatorHasBeenWaiting_EventPayload) => {
+                if (userInfo?.role === "joiner") {
+                    setPartnerInfo({
+                        displayName: creatorName,
+                        role: "creator",
+                        selectedLanguage,
                     })
                 }
-            }
-            setIsWaitingPartner(false)
-        })
-        channel.bind(CREATOR_HAS_BEEN_WAITING_EVENT, (creatorName: string) => {
-            if (userInfo?.role === "joiner") {
-                setPartnerInfo({ displayName: creatorName, role: "creator" })
-            }
-        })
+            },
+        )
 
         channel.bind(
             CREATOR_SUBMITTED_FORM_EVENT,
             ({
-                creatorName,
-                ...creatorAnswer
-            }: CompabilityFormFields & { creatorName: string }) => {
+                formValues: creatorAnswers,
+            }: CreatorSubmittedForm_EventPayload) => {
                 if (!userInfo) {
                     return
                 }
@@ -90,28 +107,23 @@ export function useChannelSubscription(currentRoomId: string) {
                     toast({
                         variant: "default",
                         title: !!userInfo.formValues ? "Oh look!" : "Heads up!",
-                        description: `${creatorName} has submitted their form`,
+                        description: `${partnerInfo?.displayName ?? "Your partner"} has submitted their form`,
                     })
-                    setPartnerInfo({
-                        displayName: creatorName,
-                        role: "creator",
-                        formValues: creatorAnswer,
-                    })
+                    setPartnerInfo((prev) =>
+                        prev ? { ...prev, formValues: creatorAnswers } : null,
+                    )
                 } else {
-                    setUserInfo({
-                        displayName: userInfo.displayName,
-                        role: "creator",
-                        formValues: creatorAnswer,
-                    })
+                    setUserInfo((prev) =>
+                        prev ? { ...prev, formValues: creatorAnswers } : null,
+                    )
                 }
             },
         )
         channel.bind(
             JOINER_SUBMITTED_FORM_EVENT,
             ({
-                joinerName,
-                ...joinerAnswer
-            }: CompabilityFormFields & { joinerName: string }) => {
+                formValues: joinerAnswers,
+            }: JoinerSubmittedForm_EventPayload) => {
                 if (!userInfo) {
                     return
                 }
@@ -119,19 +131,15 @@ export function useChannelSubscription(currentRoomId: string) {
                     toast({
                         variant: "default",
                         title: !!userInfo.formValues ? "Oh look!" : "Heads up!",
-                        description: `${joinerName} has submitted their form`,
+                        description: `${partnerInfo?.displayName ?? "Your partner"} has submitted their form`,
                     })
-                    setPartnerInfo({
-                        displayName: joinerName,
-                        role: "joiner",
-                        formValues: joinerAnswer,
-                    })
+                    setPartnerInfo((prev) =>
+                        prev ? { ...prev, formValues: joinerAnswers } : null,
+                    )
                 } else {
-                    setUserInfo({
-                        displayName: userInfo.displayName,
-                        role: "joiner",
-                        formValues: joinerAnswer,
-                    })
+                    setUserInfo((prev) =>
+                        prev ? { ...prev, formValues: joinerAnswers } : null,
+                    )
                 }
             },
         )

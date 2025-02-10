@@ -9,8 +9,6 @@ async function RoomOnBoardingPage({ params, searchParams }: Props) {
     const id = (await params).id
     const creatorName = (await searchParams).cname
 
-    console.log({ creatorName })
-
     return (
         <div className="text-center w-full flex flex-col items-center">
             <h1 className="pulse text-4xl font-bold leading-none text-primary md:text-6xl mb-4">

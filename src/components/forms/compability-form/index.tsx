@@ -33,8 +33,15 @@ function CompabilityForm({ currentRoomId }: Props) {
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+    const selectedLanguage =
+        userInfo?.role === "joiner" && partnerInfo?.role === "creator"
+            ? partnerInfo.selectedLanguage
+            : userInfo?.role === "creator"
+              ? userInfo.selectedLanguage
+              : "EN" // Just for TypeScript safety!
+
     // ON SUBMIT
-    async function onSubmit(values: CompabilityFormFields) {
+    async function onSubmit(formValues: CompabilityFormFields) {
         if (!userInfo) {
             return
         }
@@ -42,17 +49,13 @@ function CompabilityForm({ currentRoomId }: Props) {
         setIsLoading(true)
         try {
             if (userInfo?.role === "creator") {
-                await triggerCreatorSubmittedFormEvent(
-                    currentRoomId,
-                    userInfo.displayName,
-                    values,
-                )
+                await triggerCreatorSubmittedFormEvent(currentRoomId, {
+                    formValues,
+                })
             } else {
-                await triggerJoinerSubmittedFormEvent(
-                    currentRoomId,
-                    userInfo.displayName,
-                    values,
-                )
+                await triggerJoinerSubmittedFormEvent(currentRoomId, {
+                    formValues,
+                })
             }
         } catch (err) {
             if (err instanceof Error) {

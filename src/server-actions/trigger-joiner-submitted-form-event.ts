@@ -6,14 +6,17 @@ import { WSEvents } from "@/utils/constants"
 
 const JOINER_SUBMITTED_FORM_EVENT: WSEvents = "joiner-submitted-form"
 
+export type JoinerSubmittedForm_EventPayload = {
+    formValues: CompabilityFormFields
+}
+
 export async function triggerJoinerSubmittedFormEvent(
     roomId: string,
-    joinerName: string,
-    joinerFormValues: CompabilityFormFields,
+    eventPayload: JoinerSubmittedForm_EventPayload,
 ) {
     await pusherServer.trigger(
         `private-${roomId}`,
         JOINER_SUBMITTED_FORM_EVENT,
-        { joinerName, ...joinerFormValues },
+        eventPayload,
     )
 }

@@ -1,14 +1,26 @@
 "use client"
 
 import { CompabilityFormFields } from "@/components/forms/compability-form/schema"
+import { FormLanguage } from "@/utils/constants"
 import Pusher from "pusher-js"
 import { createContext, Dispatch, SetStateAction, useContext } from "react"
 
-export type UserInfo = {
+type UserInfoBase = {
     displayName: string
     role: "creator" | "joiner"
     formValues?: CompabilityFormFields
 }
+
+type CreatorInfo = UserInfoBase & {
+    role: "creator"
+    selectedLanguage: FormLanguage
+}
+
+type JoinerInfo = UserInfoBase & {
+    role: "joiner"
+}
+
+export type UserInfo = CreatorInfo | JoinerInfo
 
 type PusherClientContext = {
     pusherClient: Pusher | null
