@@ -31,7 +31,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-gradient-to-b from-pink-100 to-red-200/70 antialiased`}
             >
-                <header className="flex items-center justify-between p-4 w-auto h-auto">
+                <header className="flex items-center justify-between p-4 w-auto h-[60px]">
                     <Image
                         alt="mamasays-logo"
                         src="/mamasays-logo.png"
