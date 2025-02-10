@@ -12,6 +12,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { CompabilityFormFields, generateCompabilityFormSchema } from "./schema"
 import { FormQuestion } from "./type"
+import { cn } from "@/utils/shadcn"
 
 type Props = {
     currentRoomId: string
@@ -79,7 +80,11 @@ function CompabilityForm({ currentRoomId, formQuestions }: Props) {
                             control={form.control}
                             name={el.fieldName}
                             render={({ field }) => (
-                                <FormItem className="flex flex-col items-start rounded-md p-3">
+                                <FormItem
+                                    className={cn("flex flex-col items-start rounded-md p-3", {
+                                        "ring-1 ring-red-500": form.formState.errors[el.fieldName],
+                                    })}
+                                >
                                     <FormLabel className="w-full rounded-md bg-white/80 p-2 font-semibold">
                                         <div className="flex gap-2">
                                             <div className="flex flex-col">
@@ -93,7 +98,12 @@ function CompabilityForm({ currentRoomId, formQuestions }: Props) {
                                     </FormLabel>
                                     <FormMessage />
                                     <FormControl>
-                                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex w-full flex-col gap-2">
+                                        <RadioGroup
+                                            ref={field.ref}
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            className="flex w-full flex-col gap-2"
+                                        >
                                             {el.options.map((opt) => (
                                                 <FormItem
                                                     key={opt.value}
