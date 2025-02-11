@@ -32,7 +32,11 @@ export function useGetFormQuestions() {
                 setFormQuestions(questions)
             } catch (err) {
                 console.log(err)
-                toast({ variant: "destructive", title: "Oh noose!", description: err instanceof Error ? err.message : "Something went wrong" })
+                toast({
+                    variant: "destructive",
+                    title: "Oh noose!",
+                    description: err instanceof Error ? err.message : "Something went wrong",
+                })
                 router.push("/room")
             }
         }

@@ -91,7 +91,7 @@ export const EN_FORM_QUESTIONS: Record<string, FormQuestion> = {
     },
     roadRageResponse: {
         fieldName: "roadRageResponse",
-        emoji: "🚗💨",
+        emoji: "🚗",
         label: `You're driving and someone cuts you off. What do you do?`,
         options: [
             { label: "Scream internally but let it go.", value: "internal_screaming" },

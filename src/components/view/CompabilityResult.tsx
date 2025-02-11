@@ -127,7 +127,7 @@ function CompabilityResult({ formLanguage }: Props) {
                                     {[s.user, s.partner].map((el, i) => (
                                         <div key={i} className="flex flex-[1] gap-2">
                                             <div
-                                                className={cn("rounded-md bg-green-100 p-2", {
+                                                className={cn("rounded-md bg-green-100 p-2 flex-[1]", {
                                                     "bg-red-100": !s.isMatch,
                                                 })}
                                             >

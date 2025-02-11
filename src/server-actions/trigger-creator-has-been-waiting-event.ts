@@ -11,13 +11,6 @@ export type CreatorHasBeenWaiting_EventPayload = {
     selectedQuestionKeys: string[]
 }
 
-export async function triggerCreatorHasBeenWaitingEvent(
-    roomId: string,
-    eventPayload: CreatorHasBeenWaiting_EventPayload,
-) {
-    await pusherServer.trigger(
-        `private-${roomId}`,
-        CREATOR_HAS_BEEN_WAITING_EVENT,
-        eventPayload,
-    )
+export async function triggerCreatorHasBeenWaitingEvent(roomId: string, eventPayload: CreatorHasBeenWaiting_EventPayload) {
+    await pusherServer.trigger(`private-${roomId}`, CREATOR_HAS_BEEN_WAITING_EVENT, eventPayload)
 }

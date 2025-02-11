@@ -78,8 +78,10 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                                         <img className="h-full w-full scale-[1.15]" alt="qrcode" src={qrCodeURI} />
                                     </div>
                                     <div className="flex flex-col items-center font-thin">
-                                        <h2 className="text-sm">Or share this coom code:</h2>
-                                        <p className="font-mono text-2xl font-semibold tracking-wider text-primary">{currentRoomId.toUpperCase()}</p>
+                                        <h2 className="text-sm">Or share this room code:</h2>
+                                        <p className="font-mono text-2xl font-semibold tracking-wider text-primary">
+                                            {currentRoomId.toUpperCase()}
+                                        </p>
                                     </div>
                                 </div>
                             ) : (
