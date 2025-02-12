@@ -41,7 +41,7 @@ export default function RootLayout({
                     <header className="flex h-[60px] w-auto items-center justify-between p-4">
                         <div>
                             <p className="text-muted-foreground/50 text-xs italic">in collaboration with</p>
-                            <Image alt="mamasays-logo" src="/mamasays-logo.png" width={135} height={20} />
+                            <Image alt="mamasays-logo" src="/mamasays-logo.png" width={130} height={20} />
                         </div>
                         <GoBackToHomeButton />
                     </header>
