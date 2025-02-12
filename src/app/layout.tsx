@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-    title: "Compatibility Test | mamasays",
-    description: "Put your connection to the test with MamaSays' Valentine's Day Compatibility Challenge! Answer fun questions, compare results, and see how well you and your partner match. Ready to play?",
+    title: "Compatibility Test | Find Your Match",
+    description: "Put your bond to the test with this fun compatibility quiz! Answer questions, compare results, and see if you and your partner are truly in sync. Are you ready to play?",
 }
 
 export default function RootLayout({
@@ -34,11 +34,11 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} relative flex min-h-screen bg-gradient-to-b from-pink-100 to-red-200/70 antialiased`}
             >
                 <div className="relative z-20 flex flex-[1] flex-col">
-                    <header className="flex h-[60px] w-auto items-center justify-between p-4">
-                        <div>
+                    <header className="flex h-[60px] w-auto items-center justify-end p-4">
+                        {/* <div>
                             <p className="text-muted-foreground/50 text-xs italic">in collaboration with</p>
                             <Image alt="mamasays-logo" src="/mamasays-logo.png" width={135} height={20} />
-                        </div>
+                        </div> */}
                         <GoBackToHomeButton />
                     </header>
                     <main className="flex flex-[1] flex-col items-center justify-center px-4">
