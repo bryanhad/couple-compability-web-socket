@@ -1,23 +1,18 @@
 import ContextProviders from "@/context/ContextProviders"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Roboto } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import Image from "next/image"
 import GoBackToHomeButton from "@/components/buttons/GoBackToHomeButton"
 import FloatingIcons from "@/components/view/FloatingIcons"
-import { Heart } from "lucide-react"
+import { Heart, MousePointerClick } from "lucide-react"
 import dynamic from "next/dynamic"
 
 const BlobBackground = dynamic(() => import("@/components/client-side-component/BlobBackground"))
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const roboto = Roboto({
+    weight: "400",
     subsets: ["latin"],
 })
 
@@ -34,14 +29,20 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} relative flex min-h-screen bg-[#ffe1f2] antialiased`}
-            >
+            <body className={`${roboto.className} relative flex min-h-screen bg-[#ffe1f2] antialiased`}>
                 <div className="relative z-30 flex flex-[1] flex-col">
                     <header className="flex h-[60px] w-auto items-center justify-between p-4">
                         <div>
-                            <p className="text-muted-foreground/50 text-xs italic">in collaboration with</p>
-                            <Image alt="mamasays-logo" src="/mamasays-logo.png" width={130} height={20} />
+                            <p className="text-xs italic text-muted-foreground/50">in collaboration with</p>
+                            <a
+                                href="https://www.instagram.com/mamasays.resto"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="relative"
+                            >
+                                <Image alt="mamasays-logo" src="/mamasays-logo.png" width={130} height={20} />
+                                <MousePointerClick className="absolute bottom-0 right-0 translate-x-[85%] translate-y-[65%] text-muted-foreground" />
+                            </a>
                         </div>
                         <GoBackToHomeButton />
                     </header>
