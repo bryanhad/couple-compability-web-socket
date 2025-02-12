@@ -32,7 +32,7 @@ export default function FloatingIcons({ icon, count = 5 }: FloatingIconsProps) {
 
     return (
         <div
-            className="pointer-events-none fixed inset-0 overflow-hidden z-10"
+            className="pointer-events-none fixed inset-0 overflow-hidden z-20 "
             style={{ width: "112%", left: "-12%" }}
         >
             {icons.map(({ id, left, duration, delay }) => (
