@@ -35,12 +35,10 @@ export default function RootLayout({
             >
                 <div className="relative z-20 flex flex-[1] flex-col">
                     <header className="flex h-[60px] w-auto items-center justify-between p-4">
-                        <Image
-                            alt="mamasays-logo"
-                            src="/mamasays-logo.png"
-                            width={150}
-                            height={25}
-                        />
+                        <div>
+                            <p className="text-muted-foreground/50 text-xs italic">in collaboration with</p>
+                            <Image alt="mamasays-logo" src="/mamasays-logo.png" width={150} height={25} />
+                        </div>
                         <GoBackToHomeButton />
                     </header>
                     <main className="flex flex-[1] flex-col items-center justify-center px-4">
@@ -50,20 +48,14 @@ export default function RootLayout({
                     <footer className="flex justify-center pb-3 pt-6 text-center text-xs text-muted-foreground">
                         <div className="mb-2 w-[70%] max-w-[500px] space-y-1">
                             <p>
-                                Made with love by{" "}
-                                <span className="text-nowrap text-primary">
-                                    Bryan Hadinata
-                                </span>
+                                Made with love by <span className="text-nowrap text-primary">Bryan Hadinata</span>
                                 <br />
                             </p>
-                            <p>
-                                Enjoy the game, and may your love be as strong
-                                as a well-played strategy!
-                            </p>
+                            <p>Enjoy the game, and may your love be as strong as a well-played strategy!</p>
                         </div>
                     </footer>
                 </div>
-                <FloatingIcons icon={<Heart className="text-primary/30 shrink-0" size={40}/>} count={10} />
+                <FloatingIcons icon={<Heart className="shrink-0 text-primary/30" size={40} />} count={10} />
             </body>
         </html>
     )

@@ -84,13 +84,13 @@ function JoinRoomByIdModal() {
                     </div>
                 </Button>
             }
-            title={"Enter Test Room ID"}
+            title={"Love is calling - will you answer?"}
             desc={
                 <p>
                     Please enter your <span className="text-primary">name</span>
                     , and
                     <br />
-                    the <span className="text-primary">room ID</span> from your partner.
+                    your partner's <span className="text-primary">room ID</span>.<br/>
                 </p>
             }
         >

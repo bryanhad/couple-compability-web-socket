@@ -56,8 +56,10 @@ export function useChannelSubscription(currentRoomId: string) {
                 if (isThirdWheeling || isAloneInRoom) {
                     toast({
                         variant: "destructive",
-                        title: isAloneInRoom ? "Room not found!" : "Third wheel alert!",
-                        description: isAloneInRoom ? "Are you sure the room ID is correct?" : "bruhh",
+                        title: isAloneInRoom ? "Room not found!" : "Third wheel alert! ⚠️",
+                        description: isAloneInRoom
+                            ? "Are you sure the room ID is correct?"
+                            : "This game is for two. No third wheels allowed.",
                     })
                     router.push("/room")
                     setUserInfo(null)
