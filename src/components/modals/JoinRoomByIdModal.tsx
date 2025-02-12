@@ -90,7 +90,7 @@ function JoinRoomByIdModal() {
                     Please enter your <span className="text-primary">name</span>
                     , and
                     <br />
-                    your partner's <span className="text-primary">room ID</span>.<br/>
+                    your partner&apos;s <span className="text-primary">room ID</span>.<br/>
                 </p>
             }
         >
