@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-    title: "Compability Test | mamasays",
-    description: "A simple app for mamasays's valentine's day event",
+    title: "Compatibility Test | mamasays",
+    description: "Put your connection to the test with MamaSays' Valentine's Day Compatibility Challenge! Answer fun questions, compare results, and see how well you and your partner match. Ready to play?",
 }
 
 export default function RootLayout({
