@@ -20,7 +20,7 @@ type Props = {
 }
 
 function CompabilityForm({ currentRoomId, formQuestions }: Props) {
-    const { userInfo, partnerInfo, selectedQuestionKeys } = useClientContext()
+    const { userInfo, partnerInfo, selectedQuestionKeys, setUserInfo } = useClientContext()
 
     const dynamicSchema = generateCompabilityFormSchema(selectedQuestionKeys)
 
@@ -48,6 +48,7 @@ function CompabilityForm({ currentRoomId, formQuestions }: Props) {
                     formValues,
                 })
             }
+            setUserInfo((prev) => (prev ? { ...prev, formValues } : null))
         } catch (err) {
             if (err instanceof Error) {
                 setErrorMessage(err.message)

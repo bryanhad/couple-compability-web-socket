@@ -41,7 +41,7 @@ function OnBoardingForm({ roomId }: Props) {
         setIsLoading(true)
         try {
             const newPusherClient = await createPusherClient(displayName)
-            setUserInfo({ displayName, role: "joiner" })
+            setUserInfo({ displayName, role: "joiner", isValid: false })
             setPusherClient(newPusherClient)
             router.push(`/room/${roomId}`)
         } catch (err) {

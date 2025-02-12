@@ -18,6 +18,7 @@ type CreatorInfo = UserInfoBase & {
 
 type JoinerInfo = UserInfoBase & {
     role: "joiner"
+    isValid: boolean
 }
 
 export type UserInfo = CreatorInfo | JoinerInfo

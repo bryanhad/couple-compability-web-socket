@@ -3,7 +3,6 @@
 import { useClientContext } from "@/context/pusher-client-context"
 import { useChannelSubscription } from "@/hooks/use-channel-subscription"
 import { useGetFormQuestions } from "@/hooks/use-get-form-questions"
-import { useJoinRoom } from "@/hooks/use-join-room"
 import { useNoPusherClientGuard } from "@/hooks/use-no-pusher-client-guard"
 import CompabilityForm from "../forms/compability-form"
 import CompabilityResult from "../view/CompabilityResult"
@@ -17,20 +16,19 @@ type Props = {
 
 function Room({ currentRoomId }: Props) {
     const { pusherClient } = useNoPusherClientGuard()
-    const { channelMemberCount, userInfo, partnerInfo } = useClientContext()
+    const { userInfo, partnerInfo } = useClientContext()
     const { isWaitingPartner } = useChannelSubscription(currentRoomId)
-    const { isJoiningRoom } = useJoinRoom(currentRoomId)
     const { formQuestions, selectedLanguage } = useGetFormQuestions()
 
-    if (!pusherClient || (userInfo?.role === "joiner" && channelMemberCount < 2)) {
+    if (!pusherClient || (userInfo?.role === "joiner" && !userInfo.isValid)) {
         return <LoadingView />
     }
 
-    if (isWaitingPartner) {
+    if (userInfo?.role === "creator" && isWaitingPartner) {
         return <WaitingPartnerToJoinView currentRoomId={currentRoomId} />
     }
 
-    if (isJoiningRoom || !partnerInfo || formQuestions.length < 1) {
+    if (!partnerInfo || formQuestions.length < 1) {
         return <LoadingView />
     }
 
