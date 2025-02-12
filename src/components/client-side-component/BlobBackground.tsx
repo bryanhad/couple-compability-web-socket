@@ -20,7 +20,6 @@ function BlobBackground() {
                 xmlnsXlink="http://www.w3.org/1999/xlink"
                 version="1.1"
             >
-                <rect x="0" y="0" width="900" height="600" fill="#ffe1f2"></rect>
                 <g transform="translate(479.44627275391895 284.5897406997549)">
                     <path
                         id="blob1"

@@ -58,7 +58,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
 
     return (
         <div className="flex flex-col items-center">
-            <RippleText text="Love is patient..." className="mb-2 text-nowrap text-3xl font-bold leading-none text-primary md:text-6xl" />
+            <RippleText text="Love is patient..." className="mb-2 text-nowrap text-3xl font-bold leading-none text-primary md:text-4xl" />
             <p className="text-muted-foreground">Waiting for your special someone...</p>
             <div className="mt-2 w-full">
                 <section className="flex h-[400px] items-center justify-center pb-3">

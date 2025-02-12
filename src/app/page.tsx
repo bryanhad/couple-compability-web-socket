@@ -22,7 +22,7 @@ export default function Home() {
                 <span className="text-end">Just Rolling the Dice?</span>
             </h1>
             <p className="text mb-4 w-[70%] max-w-[400px] text-muted-foreground md:mb-10 md:text-xl">
-                Find out if you and your partner are truly in sync!
+                Find out if you and your partner<br/>are truly in sync!
             </p>
             <Button
                 asChild

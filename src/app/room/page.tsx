@@ -11,8 +11,10 @@ function RoomPage() {
                     <br />
                     Your Path!
                 </h1>
-                <p className="w-[70%] max-w-[400px] text-sm text-muted-foreground md:text-lg">
-                    No pressure, but choosing wrong might cost you dessert! 😉
+                <p className="text-sm text-muted-foreground md:text-lg">
+                    No pressure, but choosing wrong
+                    <br />
+                    might cost you dessert! 😉
                 </p>
                 <div className="flex w-full items-center gap-4">
                     <CreateRoomModal />

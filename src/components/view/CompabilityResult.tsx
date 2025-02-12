@@ -60,7 +60,7 @@ function CompabilityResult({ formLanguage }: Props) {
     const { message, score, summary } = result
 
     return (
-        <div className="rounded-md border bg-white/80 px-4 pb-4 pt-8">
+        <div className="rounded-md border bg-white/80 px-4 pb-4 pt-8 mt-2">
             <div className="mb-4 flex flex-col items-center text-center">
                 <h1 className="mb-2 text-3xl font-bold leading-10 text-primary md:text-3xl">
                     Compability Results

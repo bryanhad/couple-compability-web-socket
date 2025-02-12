@@ -64,7 +64,7 @@ function CompabilityForm({ currentRoomId, formQuestions }: Props) {
     }
 
     return (
-        <div className="w-full rounded-md border bg-white/80 px-3 py-6">
+        <div className="mt-2 w-full max-w-[700px] rounded-md bg-white/80 px-3 py-6 shadow">
             <div className="mb-5 text-center">
                 <h1 className="mb-3 text-2xl font-bold leading-none text-primary md:text-3xl">Time to Roll the Dice of Love!</h1>
                 <p className="text-muted-foreground">
