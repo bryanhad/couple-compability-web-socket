@@ -70,7 +70,6 @@ function CreateRoomModal() {
                 title: "Oops!",
                 description: errorMessage || "Something went wrong!",
             })
-        } finally {
             setIsLoading(false)
         }
     }

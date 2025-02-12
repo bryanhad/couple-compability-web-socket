@@ -50,7 +50,15 @@ export default function RootLayout({
                     <footer className="flex w-full max-w-[1200px] justify-center pb-3 pt-6 text-center text-xs text-muted-foreground">
                         <div className="mb-2 w-[70%] max-w-[500px] space-y-1">
                             <p>
-                                Made with love by <span className="text-nowrap text-primary">Bryan Hadinata</span>
+                                Made with love by{' '}
+                                <a
+                                    href="https://www.instagram.com/bryan_hadinata/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-nowrap text-primary"
+                                >
+                                    Bryan Hadinata
+                                </a>
                                 <br />
                             </p>
                             <p>Enjoy the game, and may your love be as strong as a well-played strategy!</p>

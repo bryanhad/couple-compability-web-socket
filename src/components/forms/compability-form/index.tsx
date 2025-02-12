@@ -58,7 +58,6 @@ function CompabilityForm({ currentRoomId, formQuestions }: Props) {
                 title: "Oops!",
                 description: errorMessage || "Something went wrong!",
             })
-        } finally {
             setIsLoading(false)
         }
     }
