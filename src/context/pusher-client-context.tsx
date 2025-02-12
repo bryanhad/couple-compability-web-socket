@@ -14,6 +14,7 @@ type UserInfoBase = {
 type CreatorInfo = UserInfoBase & {
     role: "creator"
     selectedLanguage: FormLanguage
+    questionCount?: number
 }
 
 type JoinerInfo = UserInfoBase & {

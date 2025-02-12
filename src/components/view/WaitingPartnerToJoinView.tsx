@@ -35,7 +35,7 @@ function WaitingPartnerToJoinView({ currentRoomId }: Props) {
                     QRCode.toDataURL(
                         `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/room/${currentRoomId}/on-boarding?cname=${userInfo?.displayName}`,
                     ),
-                    getRandomQuestionKeys(selectedLanguage),
+                    getRandomQuestionKeys(selectedLanguage, userInfo?.role === 'creator' ? userInfo.questionCount : undefined),
                 ])
                 setQrCodeURI(uri)
                 setSelectedQuestionKeys(selectedKeys)

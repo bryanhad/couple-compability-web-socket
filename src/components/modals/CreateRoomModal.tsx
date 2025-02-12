@@ -7,6 +7,7 @@ import Modal from "@/components/ui/modal"
 import { useClientContext } from "@/context/pusher-client-context"
 import { useToast } from "@/hooks/use-toast"
 import { createPusherClient } from "@/lib/pusher/client"
+import { FormLanguage, formLanguage } from "@/utils/constants"
 import { generateRandomId } from "@/utils/server"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
@@ -15,7 +16,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../ui/button"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { FormLanguage, formLanguage } from "@/utils/constants"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 const formSchema = z.object({
     displayName: z.string().min(3, {
@@ -24,6 +25,10 @@ const formSchema = z.object({
     languageSelect: z
         .string({ required_error: "Select your preferred language to play" })
         .refine((val) => formLanguage.find((l) => l.short === val), "Language must be either EN or ID"),
+    questionCount: z
+        .string()
+        .refine((val) => !isNaN(Number(val)), { message: "Question count must be a number." }) // Ensures it's a number
+        .refine((val) => Number(val) >= 5, { message: "Question count must be greater than 5." }), // Ensure it's greater than 5
 })
 
 function CreateRoomModal() {
@@ -38,10 +43,11 @@ function CreateRoomModal() {
         defaultValues: {
             displayName: "",
             languageSelect: "EN",
+            questionCount: "10",
         },
     })
 
-    async function onSubmit({ displayName, languageSelect }: z.infer<typeof formSchema>) {
+    async function onSubmit({ displayName, languageSelect, questionCount }: z.infer<typeof formSchema>) {
         setErrorMessage(null)
         setIsLoading(true)
         try {
@@ -50,6 +56,7 @@ function CreateRoomModal() {
                 displayName,
                 role: "creator",
                 selectedLanguage: languageSelect as FormLanguage,
+                questionCount: Number(questionCount),
             })
             setPusherClient(newPusherClient)
             const id = await generateRandomId()
@@ -92,13 +99,14 @@ function CreateRoomModal() {
                     </div>
                 </Button>
             }
-            title={"Fill in these required fields"}
+            title={"Cupid needs your help! 🏹"}
             desc={
                 <p>
                     Please enter your <span className="text-primary">name</span>
-                    , and
+                    ,
                     <br />
-                    your <span className="text-primary">preferred language</span> to play.
+                    your <span className="text-primary">preferred language</span> to play, and <br />
+                    set the <span className="text-primary">question count</span>.
                 </p>
             }
         >
@@ -123,9 +131,13 @@ function CreateRoomModal() {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <div className="flex items-center justify-evenly">
-                                        <FormLabel className="mt-2 text-foreground/60">Language:</FormLabel>
+                                        {/* <FormLabel className="mt-2 text-foreground/60">Language:</FormLabel> */}
                                         <FormControl>
-                                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-1">
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                                className="flex items-center gap-1"
+                                            >
                                                 {formLanguage.map((l) => (
                                                     <FormItem key={l.short} className="flex items-center space-x-1 space-y-0 pl-1">
                                                         <FormControl>
@@ -137,6 +149,35 @@ function CreateRoomModal() {
                                             </RadioGroup>
                                         </FormControl>
                                     </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={"questionCount"}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <Select onValueChange={field.onChange} defaultValue={String(field.value)}>
+                                        <FormControl>
+                                            <SelectTrigger className="justify-between gap-6">
+                                                <SelectValue placeholder="10" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {[
+                                                { count: 5, desc: "Warm-up round! 🔥" },
+                                                { count: 10, desc: "Let's see where this goes! 😏" },
+                                                { count: 15, desc: "Getting serious now! 💡" },
+                                                { count: 20, desc: "All in! no regrets. 💘" },
+                                            ].map((el) => (
+                                                <SelectItem key={el.count} value={`${el.count}`}>
+                                                    {el.count}
+                                                    <span className="text-gray-600/60"> - {el.desc}</span>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
