@@ -27,9 +27,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${roboto.className} relative flex min-h-screen bg-[#ffe1f2] antialiased`}>
-                <div className="relative z-30 flex flex-[1] flex-col items-center">
-                    <header className="flex h-[60px] w-full max-w-[1200px] items-center justify-between p-4">
+            <body className={`${roboto.className} bg-[#ffe1f2] antialiased`}>
+                <div className="relative flex flex-col items-center min-h-screen">
+                    <header className="flex h-[60px] w-full max-w-[1200px] items-center justify-between p-4 relative z-50">
                         <div>
                             <p className="text-xs italic text-muted-foreground/50">in collaboration with</p>
                             <a
@@ -44,10 +44,10 @@ export default function RootLayout({
                         </div>
                         <GoBackToHomeButton />
                     </header>
-                    <main className="flex w-full max-w-[1200px] flex-[1] flex-col items-center justify-center px-4">
+                    <main className="flex w-full max-w-[1200px] flex-[1] flex-col items-center justify-center px-4 relative z-50">
                         <ContextProviders>{children}</ContextProviders>
                     </main>
-                    <footer className="flex w-full max-w-[1200px] justify-center pb-3 pt-6 text-center text-xs text-muted-foreground">
+                    <footer className="flex w-full max-w-[1200px] justify-center z-50 relative pb-3 pt-6 text-center text-xs text-muted-foreground">
                         <div className="mb-2 w-[70%] max-w-[500px] space-y-1">
                             <p>
                                 Made with love by{' '}
@@ -64,9 +64,9 @@ export default function RootLayout({
                             <p>Enjoy the game, and may your love be as strong as a well-played strategy!</p>
                         </div>
                     </footer>
+                    <BlobBackgroundWrapper />
+                    <FloatingIcons icon={<Heart className="shrink-0 text-primary/30" size={40} />} count={10} />
                 </div>
-                <BlobBackgroundWrapper />
-                <FloatingIcons icon={<Heart className="shrink-0 text-primary/30" size={40} />} count={10} />
                 <Toaster />
             </body>
         </html>
